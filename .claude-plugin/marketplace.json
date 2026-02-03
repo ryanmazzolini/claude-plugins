@@ -6,6 +6,10 @@
     { "name": "review", "source": "./plugins/review" },
     { "name": "commit", "source": "./plugins/commit" },
     { "name": "pr", "source": "./plugins/pr" },
-    { "name": "persona", "source": "./plugins/persona" }
+    { "name": "persona", "source": "./plugins/persona" },
+    { "name": "ux-accessibility", "source": "./plugins/ux-accessibility" },
+    { "name": "typescript-nextjs", "source": "./plugins/typescript-nextjs" },
+    { "name": "ai-authoring", "source": "./plugins/ai-authoring" },
+    { "name": "explain", "source": "./plugins/explain" }
   ]
 }
