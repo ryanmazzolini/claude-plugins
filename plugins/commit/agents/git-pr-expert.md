@@ -17,9 +17,9 @@ Focus on concise "why" explanations and specific change descriptions.
 ## Workflow
 
 1. Run `git status`, `git log main..HEAD`, `git diff main...HEAD --stat`
-2. Extract Shortcut ID from branch name if present (e.g., `feat-sc-12345-description`)
+2. Extract issue number from branch name if present (e.g., `feat-gh123-description`)
 3. Analyze commits and changes to identify main theme
-4. Write PR proposal per CLAUDE.md standards
+4. Write PR proposal following any active PR rules
 5. Return proposal in output format
 
 ## Output Format
@@ -41,8 +41,7 @@ Description:
 - [Component]: [Specific change]
 - [API/Service]: [Behavior change]
 
-## Related
-https://app.shortcut.com/odeko/story/XXXXX
+Closes #123
 ---
 
 Commands to execute:

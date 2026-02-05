@@ -1,5 +1,5 @@
 {
   "name": "commit",
-  "description": "Git commit and workflow automation",
-  "version": "1.0.0"
+  "description": "Git commit, PR, and workflow automation",
+  "version": "1.1.0"
 }

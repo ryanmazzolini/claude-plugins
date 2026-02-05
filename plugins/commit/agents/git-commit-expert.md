@@ -23,7 +23,8 @@ Focus on logical grouping and concise "why" explanations.
 3. Run `git log -5 --oneline` to match commit message style
 4. If changes are complex, use Read to understand modified files
 5. Group logically related changes (split if >10 files or distinct concerns)
-6. Return proposal in output format below
+6. Follow any active commit convention rules
+7. Return proposal in output format below
 
 ## Output Format
 
@@ -41,7 +42,7 @@ Why this change matters. Context for reviewers.
 
 - component: specific change (if multi-file)
 
-sc: https://app.shortcut.com/odeko/story/XXXXX
+Closes #123
 ---
 
 [COMMIT 2 if splitting]
