@@ -1,5 +1,4 @@
 ---
-name: pr
 description: Create well-structured pull request with proper title, summary, and changes. Use when creating or updating PRs.
 argument-hint: "[title hint or issue URL]"
 allowed-tools:

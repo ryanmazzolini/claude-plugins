@@ -1,5 +1,4 @@
 ---
-name: simple
 description: Full git workflow handling branch creation, commits, and PRs. Use when committing changes, creating branches, or pushing code.
 argument-hint: "[message hint]"
 allowed-tools:
