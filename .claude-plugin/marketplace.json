@@ -10,6 +10,7 @@
     { "name": "typescript-nextjs", "source": "./plugins/typescript-nextjs" },
     { "name": "ai-authoring", "source": "./plugins/ai-authoring" },
     { "name": "explain", "source": "./plugins/explain" },
-    { "name": "research", "source": "./plugins/research" }
+    { "name": "research", "source": "./plugins/research" },
+    { "name": "humanlayer", "source": "./plugins/humanlayer" }
   ]
 }
