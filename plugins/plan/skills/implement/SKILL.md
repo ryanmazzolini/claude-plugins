@@ -1,158 +1,169 @@
 ---
-description: Execute implementation plan with progress tracking
+description: Execute plan via adaptive loop with guided learning and deviation tracking
 argument-hint: "[plan filename or date]"
 disable-model-invocation: true
 allowed-tools:
-  - Task(subagent_type:simple-code-task)
-  - Task(subagent_type:typescript-pro)
-  - Task(subagent_type:react-specialist)
-  - Task(subagent_type:rails-expert)
-  - Task(subagent_type:nextjs-developer)
+  - Task(subagent_type:Explore)
+  - Task(subagent_type:general-purpose)
   - Read
   - Edit
   - Write
   - Bash
-  - TodoWrite
 ---
 
 # Plan Implementation
 
 <rules>
-- **EXECUTE TASKS**: Complete implementation work, delegate strategically when valuable
-- **MVP FIRST**: Complete "Must Have" before "Nice to Have"
-- **UPDATE PROGRESS**: Check off tasks in plan doc as completed
-- **ASK DON'T ASSUME**: Clarify ambiguities with user
-- **STATUS SYNC**: Update external issues when done
+- **ADAPTIVE LOOP**: Assess state → decide next step → explain → do → update → loop
+- **IN-SESSION**: Implement all code changes synchronously — user sees every edit
+- **USER COMMITS**: User decides when to stage and commit
+- **HONOR DECISIONS**: Follow the Decisions section — ask user before changing a locked choice
+- **TRACK DEVIATIONS**: Log and explain every off-script change in the Deviations section
+- **TEACH**: Explain what will change, why, and how it connects to existing code
 </rules>
 
 ## Summary
 
-Implementation workflow that executes planned tasks:
+Adaptive implementation loop driven by plan doc state:
 
-1. **Load Plan** → Find `~/projects/[package]/YYYY-MM-DD-[slug].md`, extract tasks & context
-2. **Clarify** → Ask 1-4 questions about scope, constraints, priorities, ambiguities
-3. **Implement MVP** → Execute each task, verify completion, update progress
-4. **MVP Check** → Ask user to ship or continue with nice-to-haves
-5. **Complete** → Update status, sync external issues, prompt for commit/PR
-
-**Key**: Focus on task completion. Delegate to subagents for research/analysis/review when valuable. MVP before nice-to-haves.
+1. **Load & Resume** → Read plan doc, assess current state from Done/Remaining/Notes
+2. **Adaptive Loop** → Decide highest-value next step, explain, implement, update
+3. **Verify** → Run automated tests, present manual testing guide
+4. **Complete** → Summary of done work, deviations, and next steps
 
 ## Process
 
-### 1. Load Plan
+### 1. Load & Resume
 
-Find `~/projects/[package]/YYYY-MM-DD-[feature-slug].md` by date pattern. List available if ambiguous.
+Find `thoughts/ryan/plans/YYYY-MM-DD-[slug].md` by date pattern. List available if ambiguous.
 
-Extract from plan:
-- Selected approach and rationale
-- MVP "Must Have" tasks (uncompleted: `- [ ]`)
-- "Nice to Have" tasks
-- Architecture context
-- External issue links (Shortcut/GitHub)
+Read and internalize:
+- **Goal** — what we're building
+- **Approach** — how we're building it
+- **Decisions** — locked choices (ask user before changing any)
+- **Done** — what's already completed
+- **Remaining Intent** — what still needs to happen
+- **Deviations** — what went off-script previously
+- **Notes** — session context from last `/plan:save`
 
-### 2. Clarify Before Implementation
+If Notes has context from a previous session, summarize: "Picking up where we left off — [context]."
 
-**Use `AskUserQuestion`** to clarify (1-4 questions):
-- Any changes to scope or approach since plan created?
-- Technical constraints or environment setup needed?
-- Which MVP tasks to prioritize if multiple?
-- Any ambiguities in task descriptions?
+**Use `AskUserQuestion`** (1-2 questions):
+- Any changes to scope or approach since last session?
+- Anything to prioritize or skip?
 
-**Iterate** until clear:
-- All answers clear → proceed to implementation
-- Need more context → ask follow-ups
-- Plan needs adjustment → update plan doc first
+### 2. Adaptive Loop
 
-### 3. Implement Tasks Sequentially
+**For each iteration:**
 
-**For each MVP task:**
+**a) Assess** — Read current plan state. What's the highest-value next step given:
+- What's done
+- What remains
+- What the goal needs
+- Current deviations
 
-1. **Execute the task**
-   - Read relevant code and context
-   - Implement changes following existing patterns
-   - Write/update tests as needed
-   - Run tests to verify
+**b) Explain** — Before touching code, tell the user:
+- What will change and which components are affected
+- Why this is the right next step
+- How it connects to existing code and patterns
+- If pattern is unfamiliar, teach it inline
 
-2. **Verify completion**
-   - Tests pass
-   - Changes align with plan approach
-   - Update plan doc: `- [ ]` → `- [x]`, update Status count
+**c) Implement** — Make changes synchronously in-session. User sees every edit.
 
-3. **Check in with user**
-   - After each MVP task: "MVP task N/M complete. Continue?"
-   - If blocked or unclear: Ask for guidance
+**d) Test** — Run automated test commands from Verification > Automated.
+Report results. If failures, explain and fix before proceeding.
 
-**Delegate strategically when valuable:**
-- Research unfamiliar APIs/patterns: `Task(subagent_type:research-analyst)`
-- Post-implementation review: `Task(subagent_type:senior-code-reviewer)`
+**e) Update plan doc:**
+- Move completed work description to **Done** section
+- Update **Remaining Intent** (remove or refine what was addressed)
+- If anything went off-script: add numbered entry to **Deviations** with reasoning
+  - Explain to user: "This wasn't in the plan — [reason]. Recording as deviation."
 
-### 4. MVP Completion Check
-
-**Use `AskUserQuestion`** after all MVP tasks:
+**f) Check in** — `AskUserQuestion`:
 ```
-question: "MVP complete (delivers 80% of value). What's next?"
+header: "Next"
+question: "Step complete. What now?"
 options:
-  - label: "Ship MVP"
-    description: "Mark done, update external issues, prepare commit/PR"
-  - label: "Continue with nice-to-haves"
-    description: "Implement remaining enhancement tasks"
+  - label: "Continue"
+    description: "Move to next highest-value step"
+  - label: "Verify this intent"
+    description: "Stop here, verify what we just built, then continue with next intent"
+  - label: "Review changes"
+    description: "Pause to review what was just done"
+  - label: "Commit"
+    description: "Stage and commit current progress via /commit:simple"
+  - label: "Save & pause"
+    description: "Checkpoint to Notes and free up context"
 ```
 
-**If ship:**
-- Update Status → "Done (MVP)"
-- Update external issue if linked
-- Prompt: "Ready for `/commit:smart` or `/pr:create`?"
-
-**If continue:** Implement nice-to-haves (same execution approach)
-
-### 5. Final Completion
-
-**When all tasks done:**
-- Update Status → "Done"
-- Update external issue if exists
-- Use `AskUserQuestion` to confirm next step (commit/PR)
-
-## Strategic Delegation
-
-**Delegate for research/exploration:**
-- `research-analyst`: External APIs, best practices, unfamiliar patterns
-- `debugger`: Complex issue diagnosis, root cause analysis
-
-**Delegate for post-implementation:**
-- `senior-code-reviewer`: Security, performance, architecture review
-- `qa-expert`: Test strategy, quality metrics
-
-**Execute directly:**
-- Core implementation work
-- Following established patterns
-- Test writing
-- Bug fixes
-- Progress tracking and plan updates
-
-## PROGRESS TRACKING
-
-Update plan document in place after each task:
-
-```markdown
-**Status**: In Progress (3/5 tasks)
-...
-## Tasks (80/20 Priority)
-
-**MVP - Must Have**:
-- [x] Task 1: Done
-- [x] Task 2: Done
-- [ ] Task 3: Current
-
-**Nice to Have**:
-- [ ] Task 4: Pending
+If "Verify this intent": update plan doc (Done + Notes), then prompt:
+```
+Intent complete. Next steps:
+1. Run /clear
+2. Run /plan:verify [slug] to verify this work
+3. Then /plan:implement [slug] to continue with remaining intents
 ```
 
-**NEVER** create separate tracking docs.
+If "Save & pause": update plan doc Notes, then prompt:
+```
+Progress saved. To resume later:
+1. Run /clear
+2. Run /plan:implement [slug]
+```
 
-## Anti-Patterns
+**g) Loop** back to (a) until Remaining Intent is empty or user stops.
 
-❌ Nice-to-haves before MVP complete (MVP first, always)
-❌ Skipping tests or verification (verify each task)
-❌ Continuing when blocked or ambiguous (us `AskUserQuestion` for guidance)
-❌ Creating separate tracking docs (update plan doc in place)
-❌ Forgetting to update external issues (sync status when done)
+### 3. Verify
+
+When Remaining Intent is addressed:
+
+**Automated** — Run all commands from Verification > Automated.
+Report pass/fail with explanations.
+
+**Manual** — Present Verification > Manual steps:
+```
+Manual testing guide:
+
+1. Load /login in your browser
+2. Enter test@example.com / password123
+3. Click "Sign In"
+→ Expected: Redirect to /dashboard, username in header
+```
+
+**Deviations** — Surface all off-script changes for review.
+
+Suggest running `/plan:verify` for thorough pass/fail tracking.
+
+### 4. Complete
+
+Update plan doc Status. Present summary:
+- What was built and why
+- Deviations and their reasoning
+- Test results
+
+Prompt next steps:
+```
+Implementation complete.
+
+Next steps:
+1. Run /clear to free up context
+2. Run /plan:verify [slug] to run verification checks
+   — or —
+   Run /commit:simple to commit your changes
+```
+
+## Research During Implementation
+
+If a step needs exploration, **ask user first** before spawning agents:
+```
+header: "Research"
+question: "Need to investigate [topic]. Spin up a research team?"
+options:
+  - label: "Yes — research team"
+    description: "2-3 Explore agents + devil's advocate"
+  - label: "No — figure it out in-session"
+    description: "Research synchronously here"
+```
+
+When using agent teams, always include a devil's advocate.
+
