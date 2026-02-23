@@ -58,16 +58,5 @@ Closes #123
 - **Strong verbs**: Fix, Add, Remove, Update (not modify, change, adjust)
 - **No hedge words**: maybe, perhaps, might, probably
 - **No weasel words**: actually, basically, comprehensive, various, improved
-- **No AI/Claude references or test counts**
-- **No implementation details** (the diff shows that)
+- **Omit AI/Claude references, test counts, and implementation details** (the diff shows that)
 
-## GitHub CLI
-
-```bash
-gh issue list                    # List issues
-gh issue view 123                # View issue
-gh pr list                       # List PRs
-gh pr view                       # View current PR
-gh pr create --draft             # Create draft PR
-gh pr ready                      # Mark PR ready for review
-```
