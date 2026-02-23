@@ -41,15 +41,8 @@ Interactive planning workflow that converges on WHAT before exploring HOW:
 
 ### 1. Parse Input & Research
 
-**Ensure thoughts directory exists:**
 ```bash
-REPO=$(basename "$(pwd)")
-if [ ! -d "thoughts/ryan/plans" ]; then
-  mkdir -p ~/thoughts/repos/$REPO && humanlayer thoughts init --directory $REPO
-fi
-mkdir -p thoughts/ryan/plans
 DATE=$(date +%Y-%m-%d)
-# Use $DATE when constructing thoughts/ryan/plans/$DATE-[slug].md
 ```
 
 **Auto-detect source from `$ARGUMENTS`:**

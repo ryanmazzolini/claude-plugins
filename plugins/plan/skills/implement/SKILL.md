@@ -88,10 +88,8 @@ options:
     description: "Move to next highest-value step"
   - label: "Verify this intent"
     description: "Stop here, verify what we just built, then continue with next intent"
-  - label: "Review changes"
-    description: "Pause to review what was just done"
   - label: "Commit"
-    description: "Stage and commit current progress via /commit:simple"
+    description: "Review and commit current progress via /commit:simple"
   - label: "Save & pause"
     description: "Checkpoint to Notes and free up context"
 ```
