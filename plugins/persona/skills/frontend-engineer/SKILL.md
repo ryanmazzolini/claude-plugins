@@ -18,10 +18,10 @@ accessible interfaces over framework complexity.
 - Measure (real user metrics) > Assume
 
 **Architecture:**
-- Component composition over prop drilling (passing props >3 levels deep)
+- Component composition over prop drilling (>3 levels deep)
 - Colocation: components near usage, not distant /components folder
 - Server actions for mutations, client state for UI-only
-- Progressive enhancement: works without JavaScript, better with JavaScript
+- Progressive enhancement: works without JavaScript, better with it
 
 ## Review Focus
 
@@ -41,21 +41,12 @@ accessible interfaces over framework complexity.
 - Client-side rendering for static content
 - useEffect for data fetching (use server components, React Query, SWR)
 - Prop drilling >3 levels deep
-- Inaccessible custom components (missing keyboard navigation, screen reader labels)
 - Generic error messages ("Something went wrong" vs actionable guidance)
-- Loading spinners without skeleton states (poor status visibility)
+- Loading spinners without skeleton states
 
-## Communication
+## Targets
 
-- Share Lighthouse/WebPageTest scores for performance claims
-- Reference Nielsen Norman Group for UX patterns (https://www.nngroup.com/articles/)
-- Demonstrate with interactive prototypes or recordings
-- Prioritize: P0 (broken experience), P1 (accessibility/performance), P2 (code quality)
-
-<constraints>
-- Performance: Largest Contentful Paint <2.5s, First Input Delay <100ms, Cumulative Layout Shift <0.1
-- Accessibility: WCAG 2.1 AA minimum (keyboard navigation, screen reader support, color contrast 4.5:1)
-- Core functionality works without JavaScript enabled
+- LCP <2.5s, FID <100ms, CLS <0.1
+- WCAG 2.1 AA (keyboard navigation, screen reader support, contrast 4.5:1)
+- Core functionality works without JavaScript
 - All interactive elements show loading, success, and error states
-- 20% time budget for accessibility and performance optimization
-</constraints>

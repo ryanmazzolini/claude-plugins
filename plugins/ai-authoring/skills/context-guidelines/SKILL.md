@@ -1,200 +1,42 @@
 ---
-description: Context engineering principles for AI configuration. Auto-apply when editing CLAUDE.md, skills, commands, rules, agent prompts, or discussing AI configuration.
+description: Context engineering principles for AI configuration. Use when editing CLAUDE.md, skills, rules, agent prompts, or discussing AI configuration.
 ---
 
 # Context Engineering Principles
 
-Apply these principles when writing prompts, agent configurations, CLAUDE.md files, skills, commands, or AI documentation.
+## Core Rules
 
-## 1. Signal-to-Noise Ratio
+- Concrete examples beat abstract rules — 2-3 canonical patterns > 15 edge cases
+- Describe "what" and "why", not step-by-step "how"
+- Start minimal, add guidance reactively after observed failures
+- Prefer pointers to copies — reference files, don't duplicate content
+- Positive directives over negative framing ("Omit X" not "NEVER X")
 
-Concrete examples beat abstract rules.
+## Structure
 
-- 2-3 canonical patterns > 15 edge cases
-- Clear boundaries > exhaustive checklists
-- Architecture decisions > task-specific specs
-- Show patterns, not procedures
+- Markdown headers for human scanning, max 2 nesting levels
+- Specific thresholds over vague guidance (">50 LOC" not "too long")
+- Persistent knowledge (principles, architecture decisions) in files; ephemeral (debug traces, task details) in session only
 
-```markdown
-❌ "Handle all error cases appropriately"
-✅ `throw new AuthError('Invalid token', { code: 401 })`
-```
+## Instruction Budget
 
-## 2. Altitude Matching
-
-Find the right level of specificity.
-
-- **Too specific**: Hardcoded logic, rigid step-by-step
-- **Too vague**: Assumed context, unclear goals
-- **Right level**: Clear boundaries + flexible execution
-
-Describe "what" and "why", not "how".
-
-```markdown
-❌ "Step 1: Open file. Step 2: Read line 5..."
-✅ "Extract user preferences from config file"
-```
-
-## 3. Context Organization
-
-Structure for both AI and human navigation.
-
-- XML tags for AI parsing (`<role>`, `<constraints>`)
-- Markdown headers for human scanning
-- Max 2 levels of nesting
-- Semantic section boundaries
-
-```markdown
-❌ Flat wall of text
-
-✅ <role>Senior engineer...</role>
-   ## Critical Constraints
-   - Never...
-```
-
-## 4. Tool Design
-
-Minimal, non-overlapping, self-contained.
-
-- Fewer tools > more tools (reduce decision complexity)
-- Non-overlapping functionality (clear boundaries)
-- Self-contained descriptions (no cross-references)
-- Token-conscious outputs (summarize when appropriate)
-
-```markdown
-❌ readFile(), getFileContents(), loadFile()
-✅ Single Read tool
-```
-
-## 5. Memory Architecture
-
-Separate persistent from ephemeral context.
-
-| Type | Examples | Storage |
-|------|----------|---------|
-| Persistent | Principles, style guides, architecture | CLAUDE.md, skills |
-| Ephemeral | File contents, debug traces, task specs | Session only |
-
-- Throw away ephemeral after task completion
-- Store reusable patterns, not one-time details
-
-```markdown
-❌ Storing entire file diffs in memory
-✅ Storing "prefer composition over inheritance"
-```
-
-## 6. Examples Over Rules
-
-Show, don't tell.
-
-- Real code > pseudocode
-- Anti-patterns alongside patterns
-- Diverse scenarios, not similar variations
-- Examples demonstrate edge cases implicitly
-
-```markdown
-❌ "Use descriptive names"
-✅ `getUserById(id)` not `get(x)`
-```
-
-## 7. Iterative Development
-
-Build based on observation, not speculation.
-
-1. Start minimal (under-specify initially)
-2. Add guidance based on observed failures
-3. Deploy → Observe → Refine → Repeat
-4. Resist premature optimization of prompts
-
-```markdown
-❌ 500-line prompt on day one
-✅ 50 lines → test → add missing boundaries
-```
-
----
-
-## Application Patterns
-
-### Writing CLAUDE.md Files
-
-```markdown
-# Project Name
-
-<role>
-[One sentence describing Claude's role and optimization goals]
-</role>
-
-<constraints>
-- NEVER [critical constraint]
-- ALWAYS [required behavior]
-</constraints>
-
-## [Topic]
-[2-3 examples showing the pattern]
-
-## Commands
-[Available commands with brief descriptions]
-```
-
-### Writing Skills
-
-```yaml
----
-description: [What it does] + [When to trigger]. Include keywords users mention.
----
-
-# Skill Name
-
-[Core instructions - keep under 100 lines]
-[Include examples, not exhaustive rules]
-```
-
-### Writing Agent Prompts
-
-```markdown
-<role>
-You are [specific role] optimizing for [goal].
-</role>
-
-## When to [action]
-- [Specific trigger]
-- [Another trigger]
-
-## Examples
-[2-3 concrete examples]
-
-## Constraints
-- [Boundary]
-- [Boundary]
-```
-
----
+- LLMs reliably follow ~150-200 instructions; system prompts use ~50
+- Always-injected context (rules) costs every session — keep minimal
+- On-demand context (skills) only costs when invoked — can be longer
+- Irrelevant context degrades ALL instruction following, not just nearby
 
 ## Anti-Patterns
 
-| Anti-Pattern | Problem | Fix |
-|--------------|---------|-----|
-| Wall of text | Hard to parse | Use headers, XML tags |
-| Exhaustive rules | Token waste | 2-3 examples instead |
-| Vague instructions | Inconsistent behavior | Concrete examples |
-| Premature complexity | Over-engineered | Start minimal, iterate |
-| Overlapping tools | Decision paralysis | Consolidate |
-| Storing ephemeral data | Context bloat | Session-only |
+| Anti-Pattern | Fix |
+|---|---|
+| Using LLMs as linters | Deterministic tools (hooks, formatters) |
+| Generic knowledge Claude has | Only encode opinionated preferences |
+| Code examples in rules | Go stale, waste tokens |
+| Exhaustive checklists | 2-3 examples instead |
+| Auto-generated CLAUDE.md | Hand-craft the highest-leverage file |
 
----
-
-## Quick Checklist
-
-When writing AI configuration:
-
-- [ ] Role and optimization goals clear (#2)
-- [ ] Examples for critical behaviors (#6)
-- [ ] XML + markdown structure (#3)
-- [ ] Under 150 lines for skills/commands (#1)
-- [ ] No overlapping functionality (#4)
-- [ ] Persistent vs ephemeral separated (#5)
-
-## Sources
+## References
 
 - [Anthropic: Effective Context Engineering](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents)
-- [Martin Fowler: AI Development Observations](https://martinfowler.com/articles/202508-ai-thoughts.html)
+- [HumanLayer: Writing a Good CLAUDE.md](https://www.humanlayer.dev/blog/writing-a-good-claude-md)
+- [Evaluating AGENTS.md (arxiv 2602.11988)](https://arxiv.org/abs/2602.11988)
