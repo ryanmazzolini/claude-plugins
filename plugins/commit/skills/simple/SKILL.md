@@ -2,8 +2,6 @@
 description: Full git workflow handling branch creation, commits, and PRs. Use when committing changes, creating branches, or pushing code.
 argument-hint: "[message hint]"
 allowed-tools:
-  - Task(subagent_type:commit:git-commit-expert)
-  - Task(subagent_type:commit:git-pr-expert)
   - Bash(git status)
   - Bash(git diff:*)
   - Bash(git log:*)
@@ -11,6 +9,7 @@ allowed-tools:
   - Bash(git fetch:*)
   - Bash(git checkout:*)
   - Bash(git add:*)
+  - Bash(git commit:*)
   - Bash(git push:*)
   - Bash(gh pr view:*)
   - Bash(gh pr create:*)
@@ -36,10 +35,13 @@ Unified git workflow handling branch creation, commits, and PRs.
    - If on feature branch: continue
 
 3. **Changes check**
-   - `git status`, `git diff --staged`, `git diff`
+   - `git status`, `git diff --staged` (or `git diff` if nothing staged)
+   - `git log -5 --oneline` to match existing commit style
    - If has changes:
-     - Call `commit:git-commit-expert` agent for commit proposal
-     - Use `AskUserQuestion` tool to present proposal and get confirmation
+     - Analyze the diff and write a commit message following active commit convention rules
+     - If >10 files or distinct concerns, split into multiple commits
+     - Use `AskUserQuestion` with `markdown` preview on the "Commit" option showing the full commit message (subject + body) so the user can read it inline
+     - Options: "Commit as-is", "Edit message"
      - If confirmed: execute git add + commit
    - If no changes:
      - Check for unpushed commits: `git log origin/HEAD..HEAD`
@@ -55,7 +57,9 @@ Unified git workflow handling branch creation, commits, and PRs.
 5. **PR check**
    - `gh pr view HEAD 2>/dev/null`
    - If no PR exists:
-     - Call `commit:git-pr-expert` agent for PR proposal
-     - Use `AskUserQuestion` tool to confirm PR creation
+     - Analyze commits with `git log origin/main..HEAD` and `git diff origin/main..HEAD --stat`
+     - Write PR title and description following active PR convention rules
+     - Use `AskUserQuestion` with `markdown` preview on the "Create PR" option showing the full PR title and body so the user can read it inline
+     - Options: "Create draft PR", "Edit first"
      - If confirmed: execute gh pr create --draft
    - If PR exists: show URL, offer to update/push

@@ -2,12 +2,12 @@
 description: Create well-structured pull request with proper title, summary, and changes. Use when creating or updating PRs.
 argument-hint: "[title hint or issue URL]"
 allowed-tools:
-  - Task(subagent_type:commit:git-pr-expert)
   - Bash(git status)
   - Bash(git diff:*)
   - Bash(git log:*)
   - Bash(git branch:*)
   - Bash(git fetch:*)
+  - Bash(git push:*)
   - Bash(gh pr view:*)
   - Bash(gh pr list:*)
   - Bash(gh pr status:*)
@@ -26,14 +26,13 @@ allowed-tools:
    - Extract issue reference from branch name or $ARGUMENTS
 
 2. **Draft PR**:
-   - Call `commit:git-pr-expert` agent for proposal
-   - Draft title and description following any active PR rules
+   - Analyze commits and changes to identify main theme
+   - Write PR title and description following any active PR convention rules
    - Include issue link if found
 
 3. **Present Proposal to User**:
-   - Show PR title and description with clear delimiters
-   - Show exact gh commands to execute
-   - Use `AskUserQuestion` tool to confirm PR creation
+   - Use `AskUserQuestion` with `markdown` preview on the "Create PR" option showing the full PR title and body so the user can read it inline
+   - Options: "Create draft PR", "Edit first"
 
 4. **Execute if Confirmed**:
    - Push branch if needed
