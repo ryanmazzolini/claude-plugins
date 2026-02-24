@@ -5,10 +5,13 @@ Proactively persist plans, research, and reviews to the thoughts directory.
 ## Directory
 
 ```
-thoughts/ryan/
-├── plans/       # implementation plans, design docs
-├── research/    # investigations, evaluations, comparisons
-└── reviews/     # code reviews, architectural reviews
+thoughts/
+├── ryan/              # repo-specific notes (most common)
+│   ├── plans/         # implementation plans, design docs
+│   ├── research/      # investigations, evaluations, comparisons
+│   └── reviews/       # code reviews, architectural reviews
+├── global/ryan/       # cross-repo notes (architecture decisions, tooling preferences)
+└── searchable/        # hard links for search tools (auto-generated, read-only)
 ```
 
 Filename: `YYYY-MM-DD-{slug}.md` (lowercase, hyphenated).
