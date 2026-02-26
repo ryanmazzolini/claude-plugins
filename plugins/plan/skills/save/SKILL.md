@@ -6,6 +6,7 @@ allowed-tools:
   - Edit
   - Glob
   - Bash(date +*)
+  - Bash(humanlayer thoughts sync)
 ---
 
 # Session Checkpoint
@@ -62,6 +63,11 @@ Update the plan doc **Notes** section:
 ```
 
 Also update **Done** and **Remaining Intent** sections if they're stale.
+
+**Sync thoughts** after writing the checkpoint:
+```bash
+humanlayer thoughts sync
+```
 
 Prompt next steps:
 ```

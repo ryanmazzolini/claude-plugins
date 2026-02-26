@@ -78,6 +78,7 @@ Report results. If failures, explain and fix before proceeding.
 - Update **Remaining Intent** (remove or refine what was addressed)
 - If anything went off-script: add numbered entry to **Deviations** with reasoning
   - Explain to user: "This wasn't in the plan — [reason]. Recording as deviation."
+- Run `humanlayer thoughts sync` after updating the plan doc
 
 **f) Check in** — `AskUserQuestion`:
 ```
