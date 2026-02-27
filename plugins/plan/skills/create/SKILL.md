@@ -50,12 +50,40 @@ DATE=$(date +%Y-%m-%d)
 - Contains `shortcut` or `sc-` → `mcp__shortcut__stories-get-by-id`
 - Otherwise → use as plain text feature description
 
-**Spawn research team** (2-3 parallel sonnet agents):
-- `Task(subagent_type:Explore, model:sonnet)` — "What existing patterns in this codebase handle [X]? Show key files and explain the approach."
-- `Task(subagent_type:general-purpose, model:sonnet)` — "What are standard approaches for [X]? Pros/cons with deep links to docs."
-- `Task(subagent_type:general-purpose, model:sonnet)` — **Devil's advocate**: "What are the risks, limitations, and failure modes of [X]? What could go wrong? What assumptions might be wrong?"
+**Step A — Choose research lens.** Analyze the feature and propose 2-4 agents for each lens below. Then ask the user to pick a lens via `AskUserQuestion`:
 
-Present findings with explanations. Share devil's advocate concerns transparently.
+```
+header: "Research lens"
+question: "How should the research team be organized?"
+options:
+  - label: "By problem concern (Recommended)"
+    description: "e.g. Security, User experience, Integration, Performance"
+  - label: "By implementation domain"
+    description: "e.g. Frontend UI, API layer, Database, Auth middleware"
+  - label: "By perspective"
+    description: "e.g. Codebase explorer, External research, Devil's advocate"
+```
+
+**Step B — Toggle agents.** Generate 2-4 agents based on the chosen lens, plus Devil's advocate as the last option (always included). Present a multi-select checklist with all pre-selected:
+
+```
+header: "Agents"
+question: "Which research agents should run? (all selected by default)"
+multiSelect: true
+options:
+  - label: "[Agent 1 from chosen lens]"
+    description: "[What this agent will investigate]"
+  - label: "[Agent 2]"
+    description: "[What this agent will investigate]"
+  - label: "[Agent N...]"
+    description: "[What this agent will investigate]"
+  - label: "Devil's advocate"
+    description: "Risks, failure modes, wrong assumptions — what could go wrong?"
+```
+
+**Spawn selected agents** in parallel (sonnet). Use `Explore` for agents needing codebase context, `general-purpose` for agents needing web research or broader investigation. Each agent prompt should name its concern and the feature, and ask for relevant patterns, approaches, tradeoffs, and key files or doc links.
+
+Only spawn agents the user selected. Present findings with explanations. Share devil's advocate concerns transparently.
 
 Skip research if context already provided.
 
