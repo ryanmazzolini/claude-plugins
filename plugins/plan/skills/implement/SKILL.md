@@ -13,14 +13,7 @@ allowed-tools:
 
 # Plan Implementation
 
-<rules>
-- **ADAPTIVE LOOP**: Assess state → decide next step → explain → do → update → loop
-- **IN-SESSION**: Implement all code changes synchronously — user sees every edit
-- **USER COMMITS**: User decides when to stage and commit
-- **HONOR DECISIONS**: Follow the Decisions section — ask user before changing a locked choice
-- **TRACK DEVIATIONS**: Log and explain every off-script change in the Deviations section
-- **TEACH**: Explain what will change, why, and how it connects to existing code
-</rules>
+Guided implementation where the user learns and reviews every change.
 
 ## Summary
 
@@ -64,13 +57,23 @@ If Notes has context from a previous session, summarize: "Picking up where we le
 - Current deviations
 - If a dependency seems wrong mid-implementation, deviate and log it
 
-**b) Explain** — Before touching code, tell the user:
-- What will change and which components are affected
-- Why this is the right next step
-- How it connects to existing code and patterns
-- If pattern is unfamiliar, teach it inline
+**b) Propose** — `AskUserQuestion` before touching code. The question text teaches the change:
 
-**c) Implement** — Make changes synchronously in-session. User sees every edit.
+```
+header: "Next step"
+question: "[Component]: [what will change, why, and how it connects to existing code — 3-5 sentences]"
+options:
+  - label: "Go"
+    description: "Implement this change"
+  - label: "More detail"
+    description: "Show affected code, patterns, and tradeoffs"
+  - label: "Skip"
+    description: "Move to a different step"
+```
+
+If "More detail": read and present the relevant existing code, explain the pattern, then re-propose.
+
+**c) Implement** — State intent before each edit, then make the change.
 
 **d) Test** — Run automated test commands from Verification > Automated.
 Report results. If failures, explain and fix before proceeding.
