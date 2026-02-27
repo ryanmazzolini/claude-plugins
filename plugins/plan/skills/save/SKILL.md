@@ -48,7 +48,7 @@ Update the plan doc **Notes** section:
 ```markdown
 ## Notes
 **Last session**: YYYY-MM-DD
-**Status**: [brief — e.g. "2 of 4 intents addressed, auth module working"]
+**Status**: [milestone-level — e.g. "Token management done, Error handling in progress, Protected routes blocked"]
 
 **In progress**: [what was being worked on when paused]
 

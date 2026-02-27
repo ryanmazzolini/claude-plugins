@@ -42,7 +42,8 @@ Read and internalize:
 - **Approach** — how we're building it
 - **Decisions** — locked choices (ask user before changing any)
 - **Done** — what's already completed
-- **Remaining Intent** — what still needs to happen
+- **Remaining Intent** — what still needs to happen, grouped by concern (`###`) and milestone (`####`)
+- **Milestone dependencies** — `_after: X_` annotations: don't start a milestone until its dependencies are in Done
 - **Deviations** — what went off-script previously
 - **Notes** — session context from last `/plan:save`
 
@@ -58,9 +59,10 @@ If Notes has context from a previous session, summarize: "Picking up where we le
 
 **a) Assess** — Read current plan state. What's the highest-value next step given:
 - What's done
-- What remains
+- What remains (respect milestone dependencies — skip milestones whose `_after` deps aren't in Done)
 - What the goal needs
 - Current deviations
+- If a dependency seems wrong mid-implementation, deviate and log it
 
 **b) Explain** — Before touching code, tell the user:
 - What will change and which components are affected
@@ -87,20 +89,20 @@ question: "Step complete. What now?"
 options:
   - label: "Continue"
     description: "Move to next highest-value step"
-  - label: "Verify this intent"
-    description: "Stop here, verify what we just built, then continue with next intent"
+  - label: "Verify this milestone"
+    description: "Stop here, verify what we just built, then continue with next milestone"
   - label: "Commit"
     description: "Review and commit current progress via /commit:simple"
   - label: "Save & pause"
     description: "Checkpoint to Notes and free up context"
 ```
 
-If "Verify this intent": update plan doc (Done + Notes), then prompt:
+If "Verify this milestone": update plan doc (Done + Notes), then prompt:
 ```
-Intent complete. Next steps:
+Milestone complete. Next steps:
 1. Run /clear
 2. Run /plan:verify [slug] to verify this work
-3. Then /plan:implement [slug] to continue with remaining intents
+3. Then /plan:implement [slug] to continue with remaining milestones
 ```
 
 If "Save & pause": update plan doc Notes, then prompt:

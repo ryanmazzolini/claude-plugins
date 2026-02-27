@@ -94,9 +94,25 @@ Record each choice for the Decisions section.
 
 ### 4. Shape Intent
 
-**Remaining Intent** — describe outcomes, not rigid tasks:
-- "API needs login/logout/refresh endpoints" not "Implement login endpoint"
-- LLM decides concrete steps during implementation
+**Remaining Intent** — describe outcomes, not rigid tasks. Structure by concern and milestone:
+
+```
+### [Concern area]
+
+#### [Milestone — coherent sub-goal]
+_after: [dependency milestone, if any]_
+- [Goal-oriented outcome]
+- [Goal-oriented outcome]
+```
+
+- `###` — concern or component area (e.g. "Auth layer", "UI")
+- `####` — milestone, a cluster of intents that deliver a coherent sub-goal
+- `_after: X_` — optional dependency: don't start this milestone until X is in Done. Multiple deps: `_after: X, Y_`
+- `-` — individual intents: outcomes not tasks ("API needs login/logout/refresh endpoints" not "Implement login endpoint")
+
+Simple plans with one concern can use a single `###` heading or skip grouping entirely.
+
+The implement skill picks adaptively across milestones — headings organize, they don't impose strict sequence. Dependencies are the only hard constraint.
 
 **Verification** — split into automated + manual:
 - Automated: test commands (`npm test`, `pytest`, etc.)
@@ -123,7 +139,16 @@ Present summary, then confirm via `AskUserQuestion`. Write plan doc to `thoughts
 [Empty — filled during implementation]
 
 ## Remaining Intent
-- [Goal-oriented outcomes, not rigid tasks]
+
+### [Concern area]
+
+#### [Milestone name]
+- [Goal-oriented outcome]
+- [Goal-oriented outcome]
+
+#### [Another milestone]
+_after: [Milestone name]_
+- [Goal-oriented outcome]
 
 ## Deviations
 [Empty — tracked when going off-script during implementation]

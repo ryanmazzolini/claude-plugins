@@ -33,13 +33,15 @@ Read and extract: Status, Goal, Done, Remaining Intent, Deviations, Notes.
 
 ### 2. Assess Progress
 
-Count and categorize:
-- **Done items**: Completed intents from the Done section
-- **Remaining items**: Outstanding intents from Remaining Intent
+Count and categorize at milestone level:
+- **Done milestones**: Milestones fully completed (all intents in Done)
+- **In-progress milestones**: Milestones with some intents done
+- **Blocked milestones**: Milestones with unmet `_after:` dependencies
+- **Remaining milestones**: Not yet started
 - **Deviations**: Off-script changes tracked
 - **Blockers**: Any blockers mentioned in Notes
 
-Estimate completion: done / (done + remaining) as a rough fraction.
+Estimate completion: done milestones / total milestones as a rough fraction.
 
 ### 3. Report
 
@@ -50,26 +52,31 @@ Present:
 
 **Status**: [from plan doc]
 **Goal**: [one-liner from plan]
-**Progress**: [N of M intents addressed]
+**Progress**: [N of M milestones complete]
 
 ## Done
-- [completed intent — 1 line each]
+### [Concern area]
+- **[Milestone]**: [1-line summary]
+
+## In Progress
+### [Concern area]
+- **[Milestone]**: [what's done, what remains]
+
+## Blocked
+- **[Milestone]** — waiting on: [dependency milestone]
 
 ## Remaining
-- [outstanding intent — 1 line each]
+### [Concern area]
+- **[Milestone]**: [intent summary]
 
 ## Deviations
 - [off-script changes, if any]
 [or "None"]
 
-## Blockers
-- [from Notes, if any]
-[or "None"]
-
 ## Suggested Next
 [One of:]
-- "Continue implementing — next intent is [X]. Run `/plan:implement [slug]`."
-- "All intents addressed — verify with `/plan:verify [slug]`."
-- "Blockers need resolution before continuing."
+- "Continue implementing — next milestone is [X]. Run `/plan:implement [slug]`."
+- "All milestones addressed — verify with `/plan:verify [slug]`."
+- "[Milestone] is blocked by [dependency] — resolve that first."
 - "Save progress first — run `/plan:save [slug]`."
 ```
