@@ -3,8 +3,7 @@ description: Run automated tests and walk through manual verification against a 
 argument-hint: "[plan filename or date]"
 allowed-tools:
   - Read
-  - Edit
-  - Bash
+  - Edit(thoughts/ryan/plans/**)
   - Glob
 ---
 

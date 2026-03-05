@@ -6,9 +6,8 @@ allowed-tools:
   - Task(subagent_type:Explore)
   - Task(subagent_type:general-purpose)
   - Read
-  - Edit
-  - Write
-  - Bash
+  - Edit(thoughts/ryan/plans/**)
+  - Bash(humanlayer thoughts sync)
 ---
 
 # Plan Implementation

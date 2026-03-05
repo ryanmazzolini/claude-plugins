@@ -6,10 +6,10 @@ allowed-tools:
   - Task(subagent_type:Explore)
   - Task(subagent_type:general-purpose)
   - Read
-  - Edit
-  - Write
-  - Bash
+  - Edit(thoughts/ryan/plans/**)
   - Glob
+  - Bash(date +*)
+  - Bash(humanlayer thoughts sync)
 ---
 
 # Focused Task

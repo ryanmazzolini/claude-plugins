@@ -3,7 +3,7 @@ description: Checkpoint current session progress to plan doc. Use before pausing
 argument-hint: "[plan filename or date]"
 allowed-tools:
   - Read
-  - Edit
+  - Edit(thoughts/ryan/plans/**)
   - Glob
   - Bash(date +*)
   - Bash(humanlayer thoughts sync)

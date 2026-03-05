@@ -12,7 +12,7 @@ allowed-tools:
   - Bash(mkdir *)
   - Bash(humanlayer *)
   - Glob
-  - Write
+  - Edit(thoughts/ryan/plans/**)
   - Read
 ---
 
