@@ -23,6 +23,12 @@ Adaptive implementation loop driven by plan doc state:
 3. **Verify** → Run automated tests, present manual testing guide
 4. **Complete** → Summary of done work, deviations, and next steps
 
+<rules>
+- **TEST-FIRST**: Write all milestone tests upfront before any implementation. Tests are the executable spec.
+- **RATCHET**: Once a test goes green, it must stay green. Run the full test suite after every implementation step. Any regression is fixed immediately before proceeding.
+- **SKIP-SAFE**: User can skip test generation for milestones that aren't unit-testable (UI, config, infra). Those milestones still get manual verification.
+</rules>
+
 ## Process
 
 ### 1. Load & Resume
@@ -44,6 +50,40 @@ If Notes has context from a previous session, summarize: "Picking up where we le
 **Use `AskUserQuestion`** (1-2 questions):
 - Any changes to scope or approach since last session?
 - Anything to prioritize or skip?
+
+### 1.5 Write Test Suite
+
+After loading the plan and before any implementation, write a failing test for each milestone in Remaining Intent.
+
+**For each `####` milestone:**
+- Derive test assertions from the milestone's outcome bullets (`-` items)
+- Write the minimal test that would prove the milestone is complete
+- Use the project's existing test framework and conventions
+
+**Present the full test suite** via `AskUserQuestion`:
+
+```
+header: "Test suite"
+question: "Here are the failing tests — one per milestone. These are the spec.\n\n[list each milestone → test name + what it asserts]\n\nDo these capture the right behaviors?"
+options:
+  - label: "Looks good — start implementing"
+    description: "Tests capture intent, begin making them pass"
+  - label: "Adjust"
+    description: "Change what specific tests check"
+  - label: "Skip tests"
+    description: "Milestones aren't testable — use manual verification only"
+```
+
+If "Adjust": discuss which tests to change, update, re-confirm.
+If "Skip tests": proceed to Adaptive Loop without tests (fall back to existing behavior).
+
+**Run the full test suite** to confirm all new tests fail (red). Report the red count as the starting baseline:
+
+```
+Test ratchet: 0/N green — starting implementation.
+```
+
+Milestones the user marks as not testable get tagged `[manual]` and are excluded from the ratchet count.
 
 ### 2. Adaptive Loop
 
@@ -74,8 +114,11 @@ If "More detail": read and present the relevant existing code, explain the patte
 
 **c) Implement** — State intent before each edit, then make the change.
 
-**d) Test** — Run automated test commands from Verification > Automated.
-Report results. If failures, explain and fix before proceeding.
+**d) Test & Ratchet** — Run the full test suite (milestone tests + Verification > Automated).
+- Confirm the target milestone test now passes (green)
+- Confirm all previously-green tests still pass (ratchet check)
+- If any previously-green test regressed: fix the regression before proceeding
+- Report ratchet progress: `M/N green`
 
 **e) Update plan doc:**
 - Move completed work description to **Done** section
@@ -87,7 +130,7 @@ Report results. If failures, explain and fix before proceeding.
 **f) Check in** — `AskUserQuestion`:
 ```
 header: "Next"
-question: "Step complete. What now?"
+question: "Step complete. Ratchet: M/N green. What now?"
 options:
   - label: "Continue"
     description: "Move to next highest-value step"
@@ -119,6 +162,8 @@ Progress saved. To resume later:
 ### 3. Verify
 
 When Remaining Intent is addressed:
+
+**Ratchet** — Confirm all milestone tests are green (N/N). If any remain red, list them as incomplete milestones before proceeding to verification.
 
 **Automated** — Run all commands from Verification > Automated.
 Report pass/fail with explanations.
