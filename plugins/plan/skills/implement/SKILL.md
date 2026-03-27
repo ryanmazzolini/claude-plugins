@@ -132,7 +132,7 @@ If an agent errors or times out, omit its section — do not surface the failure
 - Update **Remaining Intent** (remove or refine what was addressed)
 - If anything went off-script: add numbered entry to **Deviations** with reasoning
   - Explain to user: "This wasn't in the plan — [reason]. Recording as deviation."
-- Run `humanlayer thoughts sync` after updating the plan doc
+- Run `humanlayer thoughts sync` from the repo root (where the `thoughts/` symlink lives) after updating the plan doc
 
 **g) Check in** — `AskUserQuestion`:
 ```

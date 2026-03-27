@@ -195,7 +195,7 @@ _after: [Milestone name]_
 [Empty — filled by /plan:save or during /plan:implement]
 ```
 
-**After writing the plan doc**, sync thoughts and prompt the user with next steps:
+**After writing the plan doc**, sync thoughts from the repo root (where the `thoughts/` symlink lives) and prompt the user with next steps:
 
 ```bash
 humanlayer thoughts sync

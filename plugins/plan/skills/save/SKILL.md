@@ -64,7 +64,7 @@ Update the plan doc **Notes** section:
 
 Also update **Done** and **Remaining Intent** sections if they're stale.
 
-**Sync thoughts** after writing the checkpoint:
+**Sync thoughts** from the repo root (where the `thoughts/` symlink lives) after writing the checkpoint:
 ```bash
 humanlayer thoughts sync
 ```

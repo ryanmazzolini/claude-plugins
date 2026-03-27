@@ -141,7 +141,7 @@ type: plan
 [Empty]
 ```
 
-Sync after writing:
+Sync from the repo root (where the `thoughts/` symlink lives) after writing:
 ```bash
 humanlayer thoughts sync
 ```
@@ -155,7 +155,7 @@ Implement directly — same adaptive loop as `/plan:implement`:
 3. Implement
 4. Test (run automated verification)
 5. Update plan doc (move to Done, update Remaining Intent, log Deviations)
-6. Run `humanlayer thoughts sync`
+6. Run `humanlayer thoughts sync` from the repo root
 
 **Multi-step tasks** — check in between intents via `AskUserQuestion`:
 ```

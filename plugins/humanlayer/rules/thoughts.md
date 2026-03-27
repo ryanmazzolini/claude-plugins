@@ -34,4 +34,14 @@ All reads and writes use `thoughts/ryan/` or `thoughts/global/ryan/`.
 ## Detection
 
 - `thoughts/ryan/` exists as symlink → initialized, persist automatically
-- `thoughts/` missing → initialize: `mkdir -p ~/thoughts/repos/{repo} && humanlayer thoughts init --directory {repo}`
+- `thoughts/` missing → initialize:
+  ```bash
+  # Personal repo (default profile)
+  mkdir -p ~/thoughts/repos/{repo} && humanlayer thoughts init --directory {repo}
+
+  # Work repo (named profile)
+  mkdir -p ~/thoughts/repos/{repo} && humanlayer thoughts init --directory {repo} --profile ryan
+
+  # Check sync status
+  humanlayer thoughts status
+  ```

@@ -86,7 +86,7 @@ Summary:
 - Deviations: kept/reverted/adapted
 - Overall: ready to ship or needs work
 
-Update plan doc **Status** if all verification passes. Run `humanlayer thoughts sync` after updating the plan doc.
+Update plan doc **Status** if all verification passes. Run `humanlayer thoughts sync` from the repo root (where the `thoughts/` symlink lives) after updating the plan doc.
 
 Check if **Remaining Intent** still has unaddressed items.
 
