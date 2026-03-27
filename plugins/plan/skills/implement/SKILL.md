@@ -27,6 +27,7 @@ Adaptive implementation loop driven by plan doc state:
 - **TEST-FIRST**: Write all milestone tests upfront before any implementation. Tests are the executable spec.
 - **RATCHET**: Once a test goes green, it must stay green. Run the full test suite after every implementation step. Any regression is fixed immediately before proceeding.
 - **SKIP-SAFE**: User can skip test generation for milestones that aren't unit-testable (UI, config, infra). Those milestones still get manual verification.
+- **EVALUATOR**: After each milestone's tests pass, 4 parallel sonnet agents assess completeness, scope, direction, and simplicity. Findings are informational context for the user's check-in decision, never a gate. Agent failures are silent — the check-in proceeds without that agent's findings.
 </rules>
 
 ## Process
@@ -120,14 +121,20 @@ If "More detail": read and present the relevant existing code, explain the patte
 - If any previously-green test regressed: fix the regression before proceeding
 - Report ratchet progress: `M/N green`
 
-**e) Update plan doc:**
+**e) Evaluate** — Spawn 4 parallel sonnet agents, each assessing one dimension of the milestone's work. Each agent receives scoped context (not the full codebase) and returns 1-3 focused bullets.
+
+Agents run in parallel via `Agent` tool with `model: "sonnet"` and `run_in_background: true`. Wait for all to complete (or fail silently). Consolidate non-empty results into an `evaluator_findings` block for the check-in.
+
+If an agent errors or times out, omit its section — do not surface the failure to the user. If all agents fail, proceed to the check-in with no evaluator section.
+
+**f) Update plan doc:**
 - Move completed work description to **Done** section
 - Update **Remaining Intent** (remove or refine what was addressed)
 - If anything went off-script: add numbered entry to **Deviations** with reasoning
   - Explain to user: "This wasn't in the plan — [reason]. Recording as deviation."
 - Run `humanlayer thoughts sync` after updating the plan doc
 
-**f) Check in** — `AskUserQuestion`:
+**g) Check in** — `AskUserQuestion`:
 ```
 header: "Next"
 question: "Step complete. Ratchet: M/N green. What now?"
@@ -157,7 +164,7 @@ Progress saved. To resume later:
 2. Run /plan:implement [slug]
 ```
 
-**g) Loop** back to (a) until Remaining Intent is empty or user stops.
+**h) Loop** back to (a) until Remaining Intent is empty or user stops.
 
 ### 3. Verify
 
