@@ -123,9 +123,27 @@ If "More detail": read and present the relevant existing code, explain the patte
 
 **e) Evaluate** — Spawn 4 parallel sonnet agents, each assessing one dimension of the milestone's work. Each agent receives scoped context (not the full codebase) and returns 1-3 focused bullets.
 
-Agents run in parallel via `Agent` tool with `model: "sonnet"` and `run_in_background: true`. Wait for all to complete (or fail silently). Consolidate non-empty results into an `evaluator_findings` block for the check-in.
+Spawn all 4 agents in a single message using `Agent` with `model: "sonnet"` and `run_in_background: true`. Wait for all to complete (or fail silently). Consolidate non-empty results into an `evaluator_findings` block for the check-in.
 
 If an agent errors or times out, omit its section — do not surface the failure to the user. If all agents fail, proceed to the check-in with no evaluator section.
+
+**Agent prompts** — each agent gets a focused question, scoped context, and a strict output format:
+
+**1. Completeness** — "What milestone outcomes are achieved and what's still missing?"
+- Context: milestone outcome bullets (the `-` items under the `####`), git diff of changes made this step, test results from step 2d
+- Output: 1-3 bullets. Each bullet states an outcome and whether it's done or has a gap. Tone: factual gap analysis, not judgment.
+
+**2. Scope advisor** — "Is emergent work growing beyond this milestone's intent?"
+- Context: milestone outcome bullets, git diff, Deviations section from plan doc
+- Output: 1-3 bullets. Flag work that wasn't in the milestone outcomes and recommend whether to absorb it or defer it as a new plan item. Tone: permissive — "consider deferring X" not "you went off-script." If all changes fit the milestone, return nothing.
+
+**3. Direction check** — "Does the trajectory still serve the plan's goal?"
+- Context: plan Goal, Approach, and Done sections, git diff of this step
+- Output: 1-3 bullets. Assess whether cumulative progress (Done + this step) is coherent with the stated goal and approach. Flag drift. Tone: strategic, not enforcement.
+
+**4. Simplifier** — "Is anything over-engineered, and are there reuse opportunities?"
+- Context: git diff, relevant existing files that the diff touches or imports
+- Output: 1-3 bullets. Flag unnecessary abstractions, missed reuse of existing code, or premature generalization. Tone: constructive — "you could reuse X" not "this is wrong." If the code is appropriately simple, return nothing.
 
 **f) Update plan doc:**
 - Move completed work description to **Done** section
@@ -134,20 +152,27 @@ If an agent errors or times out, omit its section — do not surface the failure
   - Explain to user: "This wasn't in the plan — [reason]. Recording as deviation."
 - Run `humanlayer thoughts sync` from the repo root (where the `thoughts/` symlink lives) after updating the plan doc
 
-**g) Check in** — `AskUserQuestion`:
+**g) Check in** — `AskUserQuestion` with evaluator findings:
+
+Build the question text by consolidating evaluator results from step 2e. For each agent that returned findings, add a section. Omit agents that returned nothing or failed — do not show "no findings" placeholders.
+
 ```
 header: "Next"
-question: "Step complete. Ratchet: M/N green. What now?"
+question: "Step complete. Ratchet: M/N green.\n\n**Evaluator findings:**\n- **Completeness**: [bullets from agent]\n- **Scope**: [bullets from agent]\n- **Direction**: [bullets from agent]\n- **Simplicity**: [bullets from agent]\n\nWhat now?"
 options:
   - label: "Continue"
     description: "Move to next highest-value step"
+  - label: "Defer to plan"
+    description: "Split flagged scope items into new plan milestones"
   - label: "Verify this milestone"
     description: "Stop here, verify what we just built, then continue with next milestone"
   - label: "Commit"
     description: "Review and commit current progress via /commit:simple"
-  - label: "Save & pause"
-    description: "Checkpoint to Notes and free up context"
 ```
+
+Only include the "Defer to plan" option when the scope advisor returned findings. If scope advisor had no findings, use the original 4 options (Continue, Verify, Commit, Save & pause).
+
+If "Defer to plan": add each flagged item as a new `####` milestone under Remaining Intent, then continue to the next step.
 
 If "Verify this milestone": update plan doc (Done + Notes), then prompt:
 ```
