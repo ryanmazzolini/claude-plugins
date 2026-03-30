@@ -3,7 +3,6 @@ description: Create implementation plan with options analysis and research team
 argument-hint: "[feature description, GitHub URL, or Shortcut URL]"
 disable-model-invocation: true
 allowed-tools:
-  - Task(subagent_type:Explore)
   - Task(subagent_type:general-purpose)
   - mcp__shortcut__stories-get-by-id
   - mcp__shortcut__stories-get-branch-name
@@ -21,7 +20,7 @@ allowed-tools:
 <rules>
 - **OPTIONS-FIRST**: Present 2-4 approaches with detailed context, user picks
 - **GOALS NOT TASKS**: Remaining Intent describes outcomes, not checkbox items
-- **RESEARCH TEAM**: Spawn parallel Explore agents + devil's advocate for research
+- **RESEARCH TEAM**: Spawn parallel research agents + devil's advocate
 - **TEACH**: Explain WHY at every step — patterns, tradeoffs, reasoning
 - **LEAN PLANS**: Plan doc stays under 150 lines
 - **ASK WHEN UNCLEAR**: Clarify via AskUserQuestion before assuming
@@ -64,26 +63,24 @@ options:
     description: "e.g. Codebase explorer, External research, Devil's advocate"
 ```
 
-**Step B — Toggle agents.** Generate 2-4 agents based on the chosen lens, plus Devil's advocate as the last option (always included). Present a multi-select checklist with all pre-selected:
+**Step B — Confirm agents.** Generate 2-4 agents based on the chosen lens, plus Devil's advocate (always included). Present the full list and let the user confirm or customize:
 
 ```
 header: "Agents"
-question: "Which research agents should run? (all selected by default)"
-multiSelect: true
+question: "Research team: [Agent 1], [Agent 2], ..., Devil's advocate. Run all?"
+multiSelect: false
 options:
-  - label: "[Agent 1 from chosen lens]"
-    description: "[What this agent will investigate]"
-  - label: "[Agent 2]"
-    description: "[What this agent will investigate]"
-  - label: "[Agent N...]"
-    description: "[What this agent will investigate]"
-  - label: "Devil's advocate"
-    description: "Risks, failure modes, wrong assumptions — what could go wrong?"
+  - label: "Run all (Recommended)"
+    description: "Spawn all research agents in parallel"
+  - label: "Customize"
+    description: "Choose which agents to run"
 ```
 
-**Spawn selected agents** in parallel (sonnet). Use `Explore` for agents needing codebase context, `general-purpose` for agents needing web research or broader investigation. Each agent prompt should name its concern and the feature, and ask for relevant patterns, approaches, tradeoffs, and key files or doc links.
+If "Customize": follow up with a multiSelect listing each agent so the user can deselect specific ones.
 
-Only spawn agents the user selected. Present findings with explanations. Share devil's advocate concerns transparently.
+**Spawn confirmed agents** in parallel (sonnet) using `general-purpose` subagent type. Each agent prompt should name its concern and the feature, and ask for relevant patterns, approaches, tradeoffs, and key files or doc links.
+
+Present findings with explanations. Share devil's advocate concerns transparently.
 
 Skip research if context already provided.
 

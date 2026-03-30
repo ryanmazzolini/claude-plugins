@@ -3,7 +3,6 @@ description: Focused planning and execution for single-concern tasks. Creates a 
 argument-hint: "[task description]"
 disable-model-invocation: true
 allowed-tools:
-  - Task(subagent_type:Explore)
   - Task(subagent_type:general-purpose)
   - Read
   - Edit(thoughts/ryan/plans/**)
@@ -16,7 +15,7 @@ allowed-tools:
 
 <rules>
 - **SINGLE CONCERN**: One component, one problem — suggest /plan:create for multi-component or architectural work
-- **LIGHT RESEARCH**: Two parallel agents (explore + devil's advocate) — not the full research team
+- **LIGHT RESEARCH**: Two parallel agents (research + devil's advocate) — not the full research team
 - **SLIM DOC**: Same plan template as /plan:create but terser — flat intent list, no research summary
 - **EXECUTE AFTER CONFIRM**: Implement directly after user confirms approach
 - **TEACH**: Explain what will change, why, and how it connects to existing code
@@ -26,7 +25,7 @@ allowed-tools:
 
 Options-first workflow for focused, single-concern tasks:
 
-1. **Clarify & Research** → 1-2 questions, parallel explore + devil's advocate
+1. **Clarify & Research** → 1-2 questions, parallel research + devil's advocate
 2. **Options** → 2-3 approaches with tradeoffs
 3. **Document** → Write slim plan doc to `thoughts/ryan/plans/`
 4. **Execute** → Implement, test, update plan doc
@@ -58,24 +57,24 @@ options:
     description: "e.g. Codebase explorer, Devil's advocate"
 ```
 
-**Step B — Toggle agents.** Generate 1-2 agents based on the chosen lens, plus Devil's advocate as the last option (always included). Present a multi-select checklist with all pre-selected:
+**Step B — Confirm agents.** Generate 1-2 agents based on the chosen lens, plus Devil's advocate (always included). Present the full list and let the user confirm or customize:
 
 ```
 header: "Agents"
-question: "Which research agents should run? (all selected by default)"
-multiSelect: true
+question: "Research team: [Agent 1], ..., Devil's advocate. Run all?"
+multiSelect: false
 options:
-  - label: "[Agent 1 from chosen lens]"
-    description: "[What this agent will investigate]"
-  - label: "[Agent N...]"
-    description: "[What this agent will investigate]"
-  - label: "Devil's advocate"
-    description: "Risks, failure modes, gotchas — what existing code could this break?"
+  - label: "Run all (Recommended)"
+    description: "Spawn all research agents in parallel"
+  - label: "Customize"
+    description: "Choose which agents to run"
 ```
 
-**Spawn selected agents** in parallel (sonnet). Use `Explore` for agents needing codebase context, `general-purpose` for agents needing web research or broader investigation.
+If "Customize": follow up with a multiSelect listing each agent so the user can deselect specific ones.
 
-Only spawn agents the user selected. Present findings and devil's advocate concerns before moving to options.
+**Spawn confirmed agents** in parallel (sonnet) using `general-purpose` subagent type.
+
+Present findings and devil's advocate concerns before moving to options.
 
 Skip research if the task is trivial (e.g. renaming, config tweak) or context is already provided.
 

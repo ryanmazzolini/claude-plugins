@@ -3,7 +3,6 @@ description: Execute plan via adaptive loop with guided learning and deviation t
 argument-hint: "[plan filename or date]"
 disable-model-invocation: true
 allowed-tools:
-  - Task(subagent_type:Explore)
   - Task(subagent_type:general-purpose)
   - Read
   - Edit(thoughts/ryan/plans/**)
@@ -240,7 +239,7 @@ header: "Research"
 question: "Need to investigate [topic]. Spin up a research team?"
 options:
   - label: "Yes — research team"
-    description: "2-3 Explore agents + devil's advocate"
+    description: "2-3 general-purpose agents + devil's advocate"
   - label: "No — figure it out in-session"
     description: "Research synchronously here"
 ```
