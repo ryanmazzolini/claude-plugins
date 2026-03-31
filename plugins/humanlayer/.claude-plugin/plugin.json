@@ -1,5 +1,19 @@
 {
   "name": "humanlayer",
   "description": "HumanLayer thoughts integration — auto-persist plans, research, and reviews",
-  "version": "2.2.0"
+  "version": "2.3.0",
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "${CLAUDE_PLUGIN_ROOT}/hooks/block-searchable-write.sh",
+            "timeout": 5
+          }
+        ]
+      }
+    ]
+  }
 }
