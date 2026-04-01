@@ -192,9 +192,9 @@ Next steps:
 - Adding tests
 - Config changes
 
-**Use `/plan:create` instead** — broader scope:
+**Use `/plan:research` → `/plan:create` instead** — broader scope:
 - Multi-component features
 - Architecture changes
-- Needs full research team (2-3 agents + devil's advocate)
+- Needs full research team (web, prior art, devil's advocate)
 - Multiple stakeholders or external tracking
 - Several major decisions to lock down
