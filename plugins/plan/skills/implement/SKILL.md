@@ -128,21 +128,25 @@ If an agent errors or times out, omit its section — do not surface the failure
 
 **Agent prompts** — each agent gets a focused question, scoped context, and a strict output format:
 
-**1. Completeness** — "What milestone outcomes are achieved and what's still missing?"
+**1. Correctness** — "Does the implementation do what it claims to do?"
 - Context: milestone outcome bullets (the `-` items under the `####`), git diff of changes made this step, test results from step 2d
-- Output: 1-3 bullets. Each bullet states an outcome and whether it's done or has a gap. Tone: factual gap analysis, not judgment.
+- Focus: Logic errors, off-by-one mistakes, incorrect type handling, unhandled edge cases, broken invariants, race conditions, incorrect API usage. Verify that the code actually satisfies the milestone outcomes — not just that it runs.
+- Output: 1-3 bullets. Each bullet identifies a specific correctness issue or confirms a tricky area is handled correctly. Tone: precise and evidence-based — cite the specific line or condition.
 
-**2. Scope advisor** — "Is emergent work growing beyond this milestone's intent?"
-- Context: milestone outcome bullets, git diff, Deviations section from plan doc
-- Output: 1-3 bullets. Flag work that wasn't in the milestone outcomes and recommend whether to absorb it or defer it as a new plan item. Tone: permissive — "consider deferring X" not "you went off-script." If all changes fit the milestone, return nothing.
+**2. Robustness / Maintainability** — "Will this hold up under real-world conditions and future changes?"
+- Context: git diff, relevant existing files that the diff touches or imports, test results from step 2d
+- Focus: Error handling at system boundaries (user input, network, file I/O, external APIs), graceful degradation, meaningful error messages, single responsibility, readable naming, testability, coupling between components. Flag missing error handling only where failure is plausible — don't add defensive code for impossible states.
+- Output: 1-3 bullets. Flag brittle assumptions, missing boundary validation, or code that will be hard to modify. Tone: constructive — "this HTTP call should handle timeouts" not "error handling is missing." If the code is appropriately robust, return nothing.
 
-**3. Direction check** — "Does the trajectory still serve the plan's goal?"
-- Context: plan Goal, Approach, and Done sections, git diff of this step
-- Output: 1-3 bullets. Assess whether cumulative progress (Done + this step) is coherent with the stated goal and approach. Flag drift. Tone: strategic, not enforcement.
-
-**4. Simplifier** — "Is anything over-engineered, and are there reuse opportunities?"
+**3. Simplicity** — "Is anything over-engineered, and are there reuse opportunities?"
 - Context: git diff, relevant existing files that the diff touches or imports
-- Output: 1-3 bullets. Flag unnecessary abstractions, missed reuse of existing code, or premature generalization. Tone: constructive — "you could reuse X" not "this is wrong." If the code is appropriately simple, return nothing.
+- Focus: Unnecessary abstractions, premature generalization, dead code, redundant layers, missed reuse of existing utilities. Three similar lines are better than a premature abstraction. Flag feature flags or backwards-compatibility shims when the code could just be changed directly.
+- Output: 1-3 bullets. Tone: constructive — "you could reuse X" or "this wrapper adds indirection without benefit" not "this is wrong." If the code is appropriately simple, return nothing.
+
+**4. Security** — "Does this code introduce security vulnerabilities?"
+- Context: git diff, relevant existing files that the diff touches or imports
+- Focus: OWASP Top 10 — injection (SQL, command, XSS), broken authentication/authorization, sensitive data exposure, security misconfiguration, insecure deserialization, known vulnerable dependencies. Also check for secrets or credentials in code/config, overly permissive CORS/CSP, missing input sanitization at trust boundaries, path traversal, and unsafe dynamic code execution.
+- Output: 1-3 bullets. Each bullet identifies a specific vulnerability or risk with a remediation suggestion. Tone: direct — "user input is interpolated into SQL without parameterization" not "consider security." If no security issues found, return nothing.
 
 **f) Update plan doc:**
 - Move completed work description to **Done** section
@@ -157,21 +161,19 @@ Build the question text by consolidating evaluator results from step 2e. For eac
 
 ```
 header: "Next"
-question: "Step complete. Ratchet: M/N green.\n\n**Evaluator findings:**\n- **Completeness**: [bullets from agent]\n- **Scope**: [bullets from agent]\n- **Direction**: [bullets from agent]\n- **Simplicity**: [bullets from agent]\n\nWhat now?"
+question: "Step complete. Ratchet: M/N green.\n\n**Evaluator findings:**\n- **Correctness**: [bullets from agent]\n- **Robustness**: [bullets from agent]\n- **Simplicity**: [bullets from agent]\n- **Security**: [bullets from agent]\n\nWhat now?"
 options:
   - label: "Continue"
     description: "Move to next highest-value step"
-  - label: "Defer to plan"
-    description: "Split flagged scope items into new plan milestones"
+  - label: "Fix findings"
+    description: "Address evaluator findings before moving on"
   - label: "Verify this milestone"
     description: "Stop here, verify what we just built, then continue with next milestone"
   - label: "Commit"
     description: "Review and commit current progress via /commit:simple"
 ```
 
-Only include the "Defer to plan" option when the scope advisor returned findings. If scope advisor had no findings, use the original 4 options (Continue, Verify, Commit, Save & pause).
-
-If "Defer to plan": add each flagged item as a new `####` milestone under Remaining Intent, then continue to the next step.
+If any evaluator flags a security vulnerability or correctness bug, surface it prominently in the check-in question and recommend addressing it before continuing.
 
 If "Verify this milestone": update plan doc (Done + Notes), then prompt:
 ```
