@@ -147,6 +147,8 @@ Simple plans with one concern can use a single `###` heading or skip grouping en
 
 The implement skill picks adaptively across milestones — headings organize, they don't impose strict sequence. Dependencies are the only hard constraint.
 
+**Minimize dependencies.** Before adding `_after:`, ask: "Does this milestone need the *output* of the dependency, or just knowledge of decisions already made?" If the latter, they can run in parallel. The only valid dependency is when one milestone produces artifacts (files, schema, API) that another milestone must read or call. Deletion/cleanup milestones are typically the only ones that genuinely depend on everything else.
+
 **Verification** — split into automated + manual:
 - Automated: test commands (`npm test`, `pytest`, etc.)
 - Manual: step-by-step actions ("Load /login, enter creds, verify redirect to /dashboard")
