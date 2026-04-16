@@ -1,0 +1,19 @@
+# Local Claude Code state — never commit
+CLAUDE.local.md
+.claude/settings.local.json
+.claude/
+
+# HumanLayer symlinks + working dirs — user-local
+thoughts/
+
+# OS / editor artifacts
+.DS_Store
+.vscode/
+.idea/
+
+# Secrets
+.env
+.env.*
+
+# Node (if any plugin grows JS tooling later)
+node_modules/
