@@ -1,7 +1,6 @@
 ---
 description: Decompose design into vertical-slice milestones and dependencies. Fourth stage of the planning workflow.
 argument-hint: "[workflow dir]"
-disable-model-invocation: true
 allowed-tools:
   - AskUserQuestion
   - Read

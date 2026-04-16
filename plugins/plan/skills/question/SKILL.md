@@ -1,7 +1,6 @@
 ---
 description: Frame problem and unknowns before research. First stage of the planning workflow.
 argument-hint: "[workflow dir, goal, GitHub URL, or Shortcut URL]"
-disable-model-invocation: true
 allowed-tools:
   - AskUserQuestion
   - Glob

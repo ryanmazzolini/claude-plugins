@@ -1,7 +1,6 @@
 ---
 description: Execute plan via adaptive loop with guided learning and deviation tracking
 argument-hint: "[workflow dir, plan file, or slug]"
-disable-model-invocation: true
 allowed-tools:
   - Task(subagent_type:general-purpose)
   - Read

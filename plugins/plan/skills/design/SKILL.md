@@ -1,7 +1,6 @@
 ---
 description: Align current/target state and key design decisions. Third stage of the planning workflow.
 argument-hint: "[workflow dir]"
-disable-model-invocation: true
 allowed-tools:
   - Task(subagent_type:general-purpose)
   - AskUserQuestion

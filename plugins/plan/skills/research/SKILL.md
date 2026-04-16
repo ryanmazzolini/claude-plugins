@@ -1,7 +1,6 @@
 ---
 description: Research a problem space before planning. Explores prior art, codebase patterns, related implementations, and risks.
 argument-hint: "[workflow dir, feature description, GitHub URL, or Shortcut URL]"
-disable-model-invocation: true
 allowed-tools:
   - Task(subagent_type:general-purpose)
   - mcp__shortcut__stories-get-by-id

@@ -1,7 +1,6 @@
 ---
 description: Distill workflow artifacts into an implementation plan with options analysis and intent shaping
 argument-hint: "[workflow dir, research slug, feature description, GitHub URL, or Shortcut URL]"
-disable-model-invocation: true
 allowed-tools:
   - Task(subagent_type:general-purpose)
   - mcp__shortcut__stories-get-by-id

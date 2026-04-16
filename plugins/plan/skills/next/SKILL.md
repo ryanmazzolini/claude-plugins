@@ -1,7 +1,6 @@
 ---
 description: Advance the planning workflow to its next stage. Detects artifacts, recommends the next skill, and invokes it.
 argument-hint: "[workflow dir, slug, or new goal]"
-disable-model-invocation: true
 allowed-tools:
   - Skill
   - AskUserQuestion

@@ -1,7 +1,6 @@
 ---
 description: Focused planning and execution for single-concern tasks. Creates a slim plan doc compatible with save/progress/verify.
 argument-hint: "[workflow dir or task description]"
-disable-model-invocation: true
 allowed-tools:
   - Task(subagent_type:general-purpose)
   - Read
