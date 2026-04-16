@@ -27,7 +27,7 @@ Quick progress check against a plan doc:
 
 ### 1. Load Plan
 
-Find `thoughts/ryan/plans/YYYY-MM-DD-[slug].md` by date pattern or argument. List available if ambiguous.
+Read `references/resolve-workflow-target.md` and follow its resolution priority. Resolved target is either a workflow dir (read `[dir]/plan.md`) or a legacy flat file.
 
 Read and extract: Status, Goal, Done, Remaining Intent, Deviations, Notes.
 
@@ -75,8 +75,8 @@ Present:
 
 ## Suggested Next
 [One of:]
-- "Continue implementing — next milestone is [X]. Run `/plan:implement [slug]`."
-- "All milestones addressed — verify with `/plan:verify [slug]`."
+- "Continue implementing — next milestone is [X]. Run `/plan:implement [workflow-dir]` (or the plan file path for legacy plans)."
+- "All milestones addressed — verify with `/plan:verify [workflow-dir]` (or the plan file path for legacy plans)."
 - "[Milestone] is blocked by [dependency] — resolve that first."
-- "Save progress first — run `/plan:save [slug]`."
+- "Save progress first — run `/plan:save [workflow-dir]` (or the plan file path for legacy plans)."
 ```

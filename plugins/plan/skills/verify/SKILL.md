@@ -28,7 +28,7 @@ Three-phase verification against a plan doc:
 
 ### 1. Load Plan
 
-Find `thoughts/ryan/plans/YYYY-MM-DD-[slug].md`. Read Verification and Deviations sections.
+Read `references/resolve-workflow-target.md` and follow its resolution priority. Resolved target is either a workflow dir (read/write `[dir]/plan.md`) or a legacy flat file. Read the Verification and Deviations sections from the resolved plan.
 
 ### 2. Automated Tests
 
@@ -86,7 +86,7 @@ Summary:
 - Deviations: kept/reverted/adapted
 - Overall: ready to ship or needs work
 
-Update plan doc **Status** if all verification passes. Run `humanlayer thoughts sync` from the repo root (where the `thoughts/` symlink lives) after updating the plan doc.
+Update **Status** in `[workflow-dir]/plan.md` (if workflow) or the legacy flat file (if legacy) when all verification passes. Run `humanlayer thoughts sync` from the repo root (where the `thoughts/` symlink lives) after updating the plan doc.
 
 Check if **Remaining Intent** still has unaddressed items.
 
@@ -97,7 +97,8 @@ Verification complete. Remaining intents to address.
 Next steps:
 1. Run /commit:simple to commit verified work
 2. Run /clear
-3. Run /plan:implement [slug] to continue with next intent
+3. Run /plan:implement thoughts/ryan/plans/YYYY-MM-DD-[slug] to continue with next intent
+   (legacy flat file: /plan:implement [slug])
 ```
 
 **If all intents addressed:**

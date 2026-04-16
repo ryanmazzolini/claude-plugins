@@ -1,10 +1,11 @@
 ---
 description: Execute plan via adaptive loop with guided learning and deviation tracking
-argument-hint: "[plan filename or date]"
+argument-hint: "[workflow dir, plan file, or slug]"
 disable-model-invocation: true
 allowed-tools:
   - Task(subagent_type:general-purpose)
   - Read
+  - Glob
   - Edit(thoughts/ryan/plans/**)
   - Bash(humanlayer thoughts sync)
 ---
@@ -33,7 +34,7 @@ Adaptive implementation loop driven by plan doc state:
 
 ### 1. Load & Resume
 
-Find `thoughts/ryan/plans/YYYY-MM-DD-[slug].md` by date pattern. List available if ambiguous.
+Read `references/resolve-workflow-target.md` and follow its resolution priority. The resolved target is either a **workflow dir** (read `[dir]/plan.md`) or a **legacy flat file** (`thoughts/ryan/plans/*.md`). Either shape works — the plan doc layout is identical.
 
 Read and internalize:
 - **Goal** — what we're building
@@ -179,15 +180,17 @@ If "Verify this milestone": update plan doc (Done + Notes), then prompt:
 ```
 Milestone complete. Next steps:
 1. Run /clear
-2. Run /plan:verify [slug] to verify this work
-3. Then /plan:implement [slug] to continue with remaining milestones
+2. Run /plan:verify [workflow-dir] to verify this work
+3. Then /plan:implement [workflow-dir] to continue with remaining milestones
 ```
+
+(For legacy flat plans, pass the plan file path instead of a workflow dir.)
 
 If "Save & pause": update plan doc Notes, then prompt:
 ```
 Progress saved. To resume later:
 1. Run /clear
-2. Run /plan:implement [slug]
+2. Run /plan:implement [workflow-dir]
 ```
 
 **h) Loop** back to (a) until Remaining Intent is empty or user stops.
@@ -228,10 +231,12 @@ Implementation complete.
 
 Next steps:
 1. Run /clear to free up context
-2. Run /plan:verify [slug] to run verification checks
+2. Run /plan:verify [workflow-dir] to run verification checks
    — or —
    Run /commit:simple to commit your changes
 ```
+
+(For legacy flat plans, pass the plan file path instead of a workflow dir.)
 
 ## Research During Implementation
 

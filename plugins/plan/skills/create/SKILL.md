@@ -1,6 +1,6 @@
 ---
-description: Distill research into an implementation plan with options analysis and intent shaping
-argument-hint: "[research slug, feature description, GitHub URL, or Shortcut URL]"
+description: Distill workflow artifacts into an implementation plan with options analysis and intent shaping
+argument-hint: "[workflow dir, research slug, feature description, GitHub URL, or Shortcut URL]"
 disable-model-invocation: true
 allowed-tools:
   - Task(subagent_type:general-purpose)
@@ -18,9 +18,9 @@ allowed-tools:
 # Plan Creation
 
 <rules>
+- **ARTIFACT-FIRST**: Build from upstream workflow artifacts (question/research/design/structure), not memory
 - **OPTIONS-FIRST**: Present 2-4 approaches with detailed context, user picks
 - **GOALS NOT TASKS**: Remaining Intent describes outcomes, not checkbox items
-- **RESEARCH-INFORMED**: Build on research findings — don't re-research
 - **TEACH**: Explain WHY at every step — patterns, tradeoffs, reasoning
 - **LEAN PLANS**: Plan doc stays under 150 lines
 - **ASK WHEN UNCLEAR**: Clarify via AskUserQuestion before assuming
@@ -28,90 +28,75 @@ allowed-tools:
 
 ## Summary
 
-Convergent planning workflow that distills research into decisions and intent:
+Convergent planning workflow that distills workflow artifacts into decisions and intent:
 
-1. **Load Context** → Find research doc or parse feature description
-2. **Define Iteratively** → Clarify problem/solution/scope via `AskUserQuestion`
-3. **Options Analysis** → Present decisions with detailed context, user picks
-4. **Shape Intent** → Define goal, remaining intent, verification criteria
-5. **Confirm & Document** → Create plan doc at `thoughts/ryan/plans/YYYY-MM-DD-[slug].md`
+1. **Resolve target** → Find or create workflow dir
+2. **Load artifacts** → Read question/research/design/structure when present
+3. **Define iteratively** → Clarify scope/success via `AskUserQuestion` (only for gaps artifacts don't cover)
+4. **Options analysis** → Present decisions with detailed context, user picks
+5. **Shape intent** → Define remaining intent per `milestone-format.md`, verification criteria
+6. **Confirm & document** → Write `plan.md` inside the workflow dir per `plan-doc-schema.md`
 
 ## Process
 
-### 1. Load Context
+### 1. Resolve Target
+
+Read `references/resolve-workflow-target.md` and follow its resolution priority.
 
 ```bash
 DATE=$(date +%Y-%m-%d)
 ```
 
 **Auto-detect source from `$ARGUMENTS`:**
-- Matches a research slug → read `thoughts/ryan/research/*[slug].md`
-- Contains `github.com` or `gh#` or `#NNN` → `gh issue view <number>`
-- Contains `shortcut` or `sc-` → `mcp__shortcut__stories-get-by-id`
-- Otherwise → use as plain text feature description
+- Arg is a workflow dir → use it.
+- Arg is a slug matching an existing workflow dir → use it.
+- Contains `github.com` or `gh#` or `#NNN` → `gh issue view <number>`, then generate workflow dir.
+- Contains `shortcut` or `sc-` → `mcp__shortcut__stories-get-by-id`, then generate workflow dir.
+- Otherwise → raw goal; create workflow dir via `references/slug-generation.md`.
 
-**If no research doc found**, check for recent research docs:
+### 2. Load Artifacts
+
+Read existing artifacts from the workflow dir per `references/workflow-artifact-loading.md`. Any of `question.md`, `research.md`, `design.md`, `structure.md` that exist are authoritative inputs.
+
+**If no upstream artifacts exist**, prompt the user:
 
 ```
-Glob: thoughts/ryan/research/*.md
-```
-
-If recent docs exist, ask the user which to use:
-
-```
-header: "Research"
-question: "Found research docs. Use one as input?"
+header: "No artifacts"
+question: "No upstream artifacts found. /plan:create works best after /plan:research (or the full QRSPI pipeline)."
 options:
-  - label: "[most recent slug]"
-    description: "[problem statement from doc]"
-  - label: "[second most recent]"
-    description: "[problem statement from doc]"
-```
-
-**If no research docs exist**, prompt the user to run research first:
-
-```
-header: "No research"
-question: "No research doc found. /plan:create works best with research as input."
-options:
-  - label: "Run /plan:research first (Recommended)"
-    description: "Research the problem space, then come back to create a plan"
+  - label: "Run /plan:next first (Recommended)"
+    description: "Let the orchestrator route you through framing/research"
   - label: "Use /plan:task instead"
-    description: "For simple, single-concern tasks that don't need deep research"
+    description: "For simple, single-concern tasks that skip research"
   - label: "Continue anyway"
-    description: "Plan without research — you'll provide context directly"
+    description: "Plan without upstream artifacts — you'll provide context directly"
 ```
 
-If "Run /plan:research first": stop and tell the user to run `/plan:research [feature]`.
-If "Use /plan:task instead": stop and tell the user to run `/plan:task [feature]`.
-If "Continue anyway": proceed with the feature description as-is.
+If "Continue anyway": proceed from the raw goal.
 
-**If research doc loaded**, summarize key findings and identified approaches as context for the definition step.
+Before asking any new questions, summarize what the artifacts already answer. Only ask about remaining gaps.
 
-### 2. Define Feature Iteratively
+### 3. Define Feature Iteratively
 
-Converge on WHAT before exploring HOW.
+Converge on WHAT before HOW.
 
-If research exists, present initial understanding drawn from the research doc's problem statement and key findings. Otherwise, form understanding from the feature description.
-
-**`AskUserQuestion`** (1-4 questions):
+If artifacts cover the problem/solution/scope, restate them and confirm. Otherwise, use `AskUserQuestion` (1-4 questions) for:
 - Problem/solution fit
 - Scope boundaries (in/out)
 - Success criteria
 - Technical constraints
 
-Iterate until locked. Reference codebase patterns from research where relevant.
+Reference codebase patterns from `research.md` where relevant.
 
-### 3. Options Analysis
+### 4. Options Analysis
 
-Identify 3-6 key decisions. When research exists, use the **Approaches Identified** section as a starting point — the research has already surfaced options with evidence.
+Identify 3-6 key decisions. When `research.md` exists, use its **Approaches Identified** section as a starting point. When `design.md` exists, those decisions are already locked — don't re-open without explicit user consent.
 
-For each decision:
+For each remaining decision:
 
-**First**, output the detailed comparison as normal text — code snippets, architecture
-diagrams, tradeoff tables. Give the user full context they can scroll through. Reference research findings and devil's advocate concerns where applicable.
+**First**, output the detailed comparison as normal text — code snippets, architecture diagrams, tradeoff tables. Reference research findings and devil's advocate concerns.
 
-**Then**, use `AskUserQuestion` with concise options that reference the output above:
+**Then**, use `AskUserQuestion` with concise options referencing the comparison above:
 
 ```
 header: "Auth method"
@@ -125,94 +110,26 @@ options:
 
 Record each choice for the Decisions section.
 
-### 4. Shape Intent
+### 5. Shape Intent
 
-**Remaining Intent** — describe outcomes, not rigid tasks. Structure by concern and milestone:
-
-```
-### [Concern area]
-
-#### [Milestone — coherent sub-goal]
-_after: [dependency milestone, if any]_
-- [Goal-oriented outcome]
-- [Goal-oriented outcome]
-```
-
-- `###` — concern or component area (e.g. "Auth layer", "UI")
-- `####` — milestone, a cluster of intents that deliver a coherent sub-goal
-- `_after: X_` — optional dependency: don't start this milestone until X is in Done. Multiple deps: `_after: X, Y_`
-- `-` — individual intents: outcomes not tasks ("API needs login/logout/refresh endpoints" not "Implement login endpoint")
-
-Simple plans with one concern can use a single `###` heading or skip grouping entirely.
-
-The implement skill picks adaptively across milestones — headings organize, they don't impose strict sequence. Dependencies are the only hard constraint.
-
-**Minimize dependencies.** Before adding `_after:`, ask: "Does this milestone need the *output* of the dependency, or just knowledge of decisions already made?" If the latter, they can run in parallel. The only valid dependency is when one milestone produces artifacts (files, schema, API) that another milestone must read or call. Deletion/cleanup milestones are typically the only ones that genuinely depend on everything else.
+**Remaining Intent** — describe outcomes, not rigid tasks. Group by `###` concern and `####` milestone per `references/milestone-format.md`. If `structure.md` already exists, use its proposed milestones as the starting point and refine.
 
 **Verification** — split into automated + manual:
 - Automated: test commands (`npm test`, `pytest`, etc.)
 - Manual: step-by-step actions ("Load /login, enter creds, verify redirect to /dashboard")
 
-### 5. Confirm & Document
+### 6. Confirm & Document
 
-Present summary, then confirm via `AskUserQuestion`. Write plan doc to `thoughts/ryan/plans/YYYY-MM-DD-[slug].md`.
+Present summary, then confirm via `AskUserQuestion`. Write `plan.md` to `[workflow-dir]/plan.md` using the schema from `references/plan-doc-schema.md`.
 
-```markdown
-# [Feature Name] - YYYY-MM-DD
+- Include the `**Workflow**:` header line pointing at the workflow dir.
+- Include the `## Artifacts` section with `./question.md`, `./research.md`, `./design.md`, `./structure.md` bullets — omit any whose file doesn't exist. If none exist, omit the section entirely.
+- Frontmatter uses `type: plan` and includes `goal: [one sentence]`.
 
-**Status**: Planning | **Goal**: [one sentence outcome]
-**External**: [Link if applicable]
-**Research**: [Link to research doc if applicable]
-
-## Approach
-[Selected strategy]
-**Why**: [reasoning, rejected alternatives]
-
-## Decisions
-- [Decision]: [choice] — [why this fits]
-
-## Done
-[Empty — filled during implementation]
-
-## Remaining Intent
-
-### [Concern area]
-
-#### [Milestone name]
-- [Goal-oriented outcome]
-- [Goal-oriented outcome]
-
-#### [Another milestone]
-_after: [Milestone name]_
-- [Goal-oriented outcome]
-
-## Deviations
-[Empty — tracked when going off-script during implementation]
-
-## Verification
-
-### Automated
-- [test commands]
-
-### Manual
-1. [Load X / Launch Y]
-2. [Perform action]
-3. [Verify outcome]
-
-## Notes
-[Empty — filled by /plan:save or during /plan:implement]
-```
-
-**After writing the plan doc**, sync thoughts from the repo root (where the `thoughts/` symlink lives) and prompt the user with next steps:
+**After writing**, sync from the repo root and print the handoff:
 
 ```bash
 humanlayer thoughts sync
 ```
 
-```
-Plan saved to thoughts/ryan/plans/YYYY-MM-DD-[slug].md
-
-Next steps:
-1. Run /clear to free up context
-2. Run /plan:implement YYYY-MM-DD-[slug]
-```
+Use the "After `plan.md` (from `/plan:create`)" template from `references/handoff-templates.md`.

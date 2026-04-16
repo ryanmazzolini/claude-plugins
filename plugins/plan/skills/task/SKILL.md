@@ -1,6 +1,6 @@
 ---
 description: Focused planning and execution for single-concern tasks. Creates a slim plan doc compatible with save/progress/verify.
-argument-hint: "[task description]"
+argument-hint: "[workflow dir or task description]"
 disable-model-invocation: true
 allowed-tools:
   - Task(subagent_type:general-purpose)
@@ -8,6 +8,7 @@ allowed-tools:
   - Edit(thoughts/ryan/plans/**)
   - Glob
   - Bash(date +*)
+  - Bash(mkdir *)
   - Bash(humanlayer thoughts sync)
 ---
 
@@ -16,7 +17,7 @@ allowed-tools:
 <rules>
 - **SINGLE CONCERN**: One component, one problem — suggest /plan:create for multi-component or architectural work
 - **LIGHT RESEARCH**: Two parallel agents (research + devil's advocate) — not the full research team
-- **SLIM DOC**: Same plan template as /plan:create but terser — flat intent list, no research summary
+- **SLIM DOC**: Same plan template as /plan:create but terser — flat intent list, no Artifacts section
 - **EXECUTE AFTER CONFIRM**: Implement directly after user confirms approach
 - **TEACH**: Explain what will change, why, and how it connects to existing code
 </rules>
@@ -25,25 +26,33 @@ allowed-tools:
 
 Options-first workflow for focused, single-concern tasks:
 
-1. **Clarify & Research** → 1-2 questions, parallel research + devil's advocate
-2. **Options** → 2-3 approaches with tradeoffs
-3. **Document** → Write slim plan doc to `thoughts/ryan/plans/`
-4. **Execute** → Implement, test, update plan doc
-5. **Complete** → Sync thoughts, prompt next steps
+1. **Resolve target** → Find or create workflow dir
+2. **Clarify & research** → 1-2 questions, parallel research + devil's advocate
+3. **Options** → 2-3 approaches with tradeoffs
+4. **Document** → Write slim `plan.md` inside the workflow dir
+5. **Execute** → Implement, test, update plan doc
+6. **Complete** → Sync thoughts, prompt next steps
 
 ## Process
 
-### 1. Clarify Task
+### 1. Resolve Target
+
+Read `references/resolve-workflow-target.md` and follow its resolution priority.
 
 ```bash
 DATE=$(date +%Y-%m-%d)
 ```
 
+- Arg is a workflow dir → use it.
+- Arg is a raw task description → create workflow dir via `references/slug-generation.md`.
+
+### 2. Clarify Task
+
 Parse task description. Use `AskUserQuestion` (1-2 questions) if unclear:
 - What needs to be done?
 - Any constraints or preferences?
 
-**Step A — Choose research lens.** Analyze the task and propose 1-2 agents for each lens below. Then ask the user to pick a lens via `AskUserQuestion`:
+**Step A — Choose research lens.** Analyze the task and propose 1-2 agents for each lens. Ask the user to pick via `AskUserQuestion`:
 
 ```
 header: "Research lens"
@@ -57,7 +66,7 @@ options:
     description: "e.g. Codebase explorer, Devil's advocate"
 ```
 
-**Step B — Confirm agents.** Generate 1-2 agents based on the chosen lens, plus Devil's advocate (always included). Present the full list and let the user confirm or customize:
+**Step B — Confirm agents.** Generate 1-2 agents based on the chosen lens, plus Devil's advocate (always included):
 
 ```
 header: "Agents"
@@ -70,15 +79,13 @@ options:
     description: "Choose which agents to run"
 ```
 
-If "Customize": follow up with a multiSelect listing each agent so the user can deselect specific ones.
+If "Customize": follow up with a multiSelect listing each agent.
 
-**Spawn confirmed agents** in parallel (sonnet) using `general-purpose` subagent type.
+**Spawn confirmed agents** in parallel (sonnet) using `general-purpose` subagent type. Present findings and devil's advocate concerns before moving to options.
 
-Present findings and devil's advocate concerns before moving to options.
+Skip research if the task is trivial (renaming, config tweak) or context is already provided.
 
-Skip research if the task is trivial (e.g. renaming, config tweak) or context is already provided.
-
-### 2. Present Options
+### 3. Present Options
 
 Identify 1-3 key decisions (if task has choices).
 
@@ -95,57 +102,21 @@ options:
 
 **If one obvious approach**: Skip options, present approach and confirm.
 
-### 3. Document Plan
+### 4. Document Plan
 
-Write plan doc to `thoughts/ryan/plans/YYYY-MM-DD-[slug].md`.
+Write `plan.md` to `[workflow-dir]/plan.md` using the schema from `references/plan-doc-schema.md`, with these adjustments for the task path:
 
-Same template as `/plan:create` but terser — no research summary, brief sections, flat intent list:
+- **Omit** the `## Artifacts` section (task path has no upstream artifacts).
+- **Use a flat bullet list** under `## Remaining Intent` — no `###` / `####` grouping needed for single-concern work.
+- Frontmatter uses `type: plan`, include `goal: [one sentence]`.
+- Include the `**Workflow**:` header line pointing at the workflow dir.
 
-```markdown
----
-source: {repo basename}
-date: YYYY-MM-DD
-type: plan
----
-
-# [Task Name] - YYYY-MM-DD
-
-**Status**: In Progress | **Goal**: [one sentence]
-**External**: [Link if applicable]
-
-## Approach
-[Selected approach in 1-2 sentences]
-
-## Decisions
-- [Any choices made during options step]
-
-## Done
-[Empty]
-
-## Remaining Intent
-- [Flat list of goal-oriented outcomes]
-
-## Deviations
-[Empty]
-
-## Verification
-
-### Automated
-- [test commands]
-
-### Manual
-1. [Verification steps]
-
-## Notes
-[Empty]
-```
-
-Sync from the repo root (where the `thoughts/` symlink lives) after writing:
+Sync after writing:
 ```bash
 humanlayer thoughts sync
 ```
 
-### 4. Execute
+### 5. Execute
 
 Implement directly — same adaptive loop as `/plan:implement`:
 
@@ -171,17 +142,9 @@ options:
 
 **Single-intent tasks** — skip the check-in, complete and report.
 
-### 5. Complete
+### 6. Complete
 
-Update plan doc Status. Report:
-```
-Done: [Brief summary]
-Changed: [Files affected]
-
-Next steps:
-- /plan:verify [slug] — run verification
-- /commit:simple — commit changes
-```
+Update plan doc Status. Print handoff using the "After `plan.md` (from `/plan:task`)" template from `references/handoff-templates.md`.
 
 ## When to Use
 
@@ -192,9 +155,9 @@ Next steps:
 - Adding tests
 - Config changes
 
-**Use `/plan:research` → `/plan:create` instead** — broader scope:
+**Use `/plan:next` or `/plan:research` → `/plan:create` instead** — broader scope:
 - Multi-component features
 - Architecture changes
-- Needs full research team (web, prior art, devil's advocate)
+- Needs full research team
 - Multiple stakeholders or external tracking
 - Several major decisions to lock down

@@ -30,7 +30,7 @@ Saves current session context to the plan doc so the next session can resume col
 
 ### 1. Load Plan
 
-Find `thoughts/ryan/plans/YYYY-MM-DD-[slug].md` by date pattern. List available if ambiguous.
+Read `references/resolve-workflow-target.md` and follow its resolution priority. Resolved target is either a workflow dir (write to `[dir]/plan.md`) or a legacy flat file.
 
 ### 2. Capture Session State
 
@@ -64,6 +64,8 @@ Update the plan doc **Notes** section:
 
 Also update **Done** and **Remaining Intent** sections if they're stale.
 
+Write to `[workflow-dir]/plan.md` if the resolved target is a workflow directory, or to the legacy flat file path otherwise. The existing `Edit(thoughts/ryan/plans/**)` glob covers both shapes.
+
 **Sync thoughts** from the repo root (where the `thoughts/` symlink lives) after writing the checkpoint:
 ```bash
 humanlayer thoughts sync
@@ -71,9 +73,9 @@ humanlayer thoughts sync
 
 Prompt next steps:
 ```
-Checkpoint saved to thoughts/ryan/plans/YYYY-MM-DD-[slug].md
+Checkpoint saved to [resolved target path]
 
 To resume later:
 1. Run /clear to free up context
-2. Run /plan:implement [slug]
+2. Run /plan:implement [workflow-dir]  (legacy flat file: /plan:implement [slug])
 ```

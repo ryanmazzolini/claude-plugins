@@ -1,5 +1,5 @@
 {
   "name": "plan",
-  "description": "Implementation planning workflows",
-  "version": "1.8.0"
+  "description": "Staged implementation planning workflow (question → research → design → structure → create → implement → verify)",
+  "version": "2.0.0"
 }
