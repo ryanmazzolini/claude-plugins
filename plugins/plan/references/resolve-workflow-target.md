@@ -4,8 +4,8 @@ Consistent rules for turning `$ARGUMENTS` into a workflow target. Every plan ski
 
 ## Shapes
 
-- **Workflow directory**: `thoughts/ryan/plans/YYYY-MM-DD-[slug]/` containing zero or more of `question.md`, `research.md`, `design.md`, `structure.md`, `plan.md`. Name matches `^\d{4}-\d{2}-\d{2}-.+`.
-- **Legacy flat plan**: `thoughts/ryan/plans/*.md` (single file, not inside a workflow dir). Supported read/write for back-compat.
+- **Workflow directory**: `thoughts/*/plans/YYYY-MM-DD-[slug]/` containing zero or more of `question.md`, `research.md`, `design.md`, `structure.md`, `plan.md`. Name matches `^\d{4}-\d{2}-\d{2}-.+`.
+- **Legacy flat plan**: `thoughts/*/plans/*.md` (single file, not inside a workflow dir). Supported read/write for back-compat.
 
 ## Resolution priority
 
@@ -13,10 +13,10 @@ Walk this list top-down. The first match wins.
 
 1. **Arg is an existing workflow directory** (matches the pattern above and is a dir) → use that dir.
 2. **Arg is an existing file named `question.md` / `research.md` / `design.md` / `structure.md` / `plan.md`** whose parent matches the workflow pattern → resolve to the parent dir.
-3. **Arg is an existing `.md` file under `thoughts/ryan/plans/`** (flat, not in a subdir) → legacy plan.
-4. **Arg is a slug or date fragment** → Glob `thoughts/ryan/plans/*[arg]*/` first, then `thoughts/ryan/plans/*[arg]*.md`. Multiple matches → AskUserQuestion with up to 5 most-recent candidates (by mtime).
-5. **Arg is a free-text goal** *(only for skills that create artifacts: `question`, `task`, `next`)* → mkdir new workflow dir at `thoughts/ryan/plans/$(date +%Y-%m-%d)-[slug]/`. Generate slug per `slug-generation.md`.
-6. **No arg** → Glob `thoughts/ryan/plans/*/plan.md` and `thoughts/ryan/plans/*.md`, sort by mtime desc, pick most recent. If nothing, prompt the user for a goal.
+3. **Arg is an existing `.md` file under `thoughts/*/plans/`** (flat, not in a subdir) → legacy plan.
+4. **Arg is a slug or date fragment** → Glob `thoughts/*/plans/*[arg]*/` first, then `thoughts/*/plans/*[arg]*.md`. Multiple matches → AskUserQuestion with up to 5 most-recent candidates (by mtime).
+5. **Arg is a free-text goal** *(only for skills that create artifacts: `question`, `task`, `next`)* → mkdir new workflow dir at `thoughts/*/plans/$(date +%Y-%m-%d)-[slug]/`. Generate slug per `slug-generation.md`.
+6. **No arg** → Glob `thoughts/*/plans/*/plan.md` and `thoughts/*/plans/*.md`, sort by mtime desc, pick most recent. If nothing, prompt the user for a goal.
 
 ## Write rules
 

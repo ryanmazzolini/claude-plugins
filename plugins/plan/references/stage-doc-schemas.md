@@ -1,6 +1,6 @@
 # Stage Document Schemas
 
-Canonical shapes for the four upstream stage artifacts. Each is written into the workflow dir (`thoughts/ryan/plans/YYYY-MM-DD-[slug]/`).
+Canonical shapes for the four upstream stage artifacts. Each is written into the workflow dir (`thoughts/*/plans/YYYY-MM-DD-[slug]/`).
 
 ## Shared frontmatter
 

@@ -3,7 +3,7 @@ description: Checkpoint current session progress to plan doc. Use before pausing
 argument-hint: "[plan filename or date]"
 allowed-tools:
   - Read
-  - Edit(thoughts/ryan/plans/**)
+  - Edit(thoughts/*/plans/**)
   - Glob
   - Bash(date +*)
   - Bash(humanlayer thoughts sync)
@@ -64,7 +64,7 @@ Update the plan doc **Notes** section:
 
 Also update **Done** and **Remaining Intent** sections if they're stale.
 
-Write to `[workflow-dir]/plan.md` if the resolved target is a workflow directory, or to the legacy flat file path otherwise. The existing `Edit(thoughts/ryan/plans/**)` glob covers both shapes.
+Write to `[workflow-dir]/plan.md` if the resolved target is a workflow directory, or to the legacy flat file path otherwise. The existing `Edit(thoughts/*/plans/**)` glob covers both shapes.
 
 **Sync thoughts** from the repo root (where the `thoughts/` symlink lives) after writing the checkpoint:
 ```bash

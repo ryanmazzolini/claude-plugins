@@ -5,7 +5,7 @@ disable-model-invocation: true
 allowed-tools:
   - Task(subagent_type:general-purpose)
   - Read
-  - Edit(thoughts/ryan/plans/**)
+  - Edit(thoughts/*/plans/**)
   - Glob
   - Bash(date +*)
   - Bash(mkdir *)

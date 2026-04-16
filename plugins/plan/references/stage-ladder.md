@@ -22,7 +22,7 @@ Any of the upstream artifacts can be missing — the ladder treats `question →
 
 ## Legacy flat plan targets
 
-Legacy flat files (`thoughts/ryan/plans/*.md`) have no upstream artifacts. Ladder:
+Legacy flat files (`thoughts/*/plans/*.md`) have no upstream artifacts. Ladder:
 
 | Remaining Intent | Recommended stage |
 |---|---|

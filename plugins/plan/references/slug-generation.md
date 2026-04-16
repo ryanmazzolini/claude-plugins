@@ -33,7 +33,7 @@ Keep domain-specific nouns, verbs, and adjectives. Prefer the most specific word
 
 ## Full path
 
-`thoughts/ryan/plans/$(date +%Y-%m-%d)-[slug]/` — e.g. `thoughts/ryan/plans/2026-04-16-rate-limiting-api/`.
+`thoughts/*/plans/$(date +%Y-%m-%d)-[slug]/` — e.g. `thoughts/*/plans/2026-04-16-rate-limiting-api/`.
 
 ## Collision
 

@@ -9,7 +9,7 @@ allowed-tools:
   - Glob
   - Bash(date +*)
   - Bash(mkdir *)
-  - Bash(ls thoughts/ryan/plans/*)
+  - Bash(ls thoughts/*/plans/*)
 ---
 
 # Plan: Next
@@ -43,8 +43,8 @@ date +%Y-%m-%d
 ```
 
 - **Workflow dir / file / slug** → resolve per the reference.
-- **Raw goal** → generate a slug per `references/slug-generation.md`, then `mkdir thoughts/ryan/plans/$(date +%Y-%m-%d)-[slug]/`.
-- **No arg** → Glob `thoughts/ryan/plans/*/` and `thoughts/ryan/plans/*.md` sorted by mtime, pick most recent. If nothing found, print usage and exit (see edge cases below).
+- **Raw goal** → generate a slug per `references/slug-generation.md`, then `mkdir thoughts/*/plans/$(date +%Y-%m-%d)-[slug]/`.
+- **No arg** → Glob `thoughts/*/plans/*/` and `thoughts/*/plans/*.md` sorted by mtime, pick most recent. If nothing found, print usage and exit (see edge cases below).
 
 ### 2. Inspect Artifacts
 
@@ -84,7 +84,7 @@ Example for a dir with `question.md` and `research.md` present:
 header: "Next stage"
 question: |
   Goal: dark mode admin dashboard
-  Workflow: thoughts/ryan/plans/2026-04-16-dark-mode-admin-dashboard/
+  Workflow: thoughts/*/plans/2026-04-16-dark-mode-admin-dashboard/
   Artifacts present: question.md, research.md
   Recommended: design — research done, align on technical choices before structuring
 options:
@@ -116,7 +116,7 @@ If the user picks "Stay in session", print a one-line acknowledgment (e.g. `Stay
 Usage: /plan:next <workflow-dir | slug | goal>
 
 Examples:
-  /plan:next thoughts/ryan/plans/2026-04-16-dark-mode-admin-dashboard/
+  /plan:next thoughts/*/plans/2026-04-16-dark-mode-admin-dashboard/
   /plan:next dark-mode-admin-dashboard
   /plan:next "Add dark mode toggle to admin dashboard"
 ```

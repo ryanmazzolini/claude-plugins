@@ -5,7 +5,7 @@ disable-model-invocation: true
 allowed-tools:
   - AskUserQuestion
   - Read
-  - Edit(thoughts/ryan/plans/**)
+  - Edit(thoughts/*/plans/**)
   - Glob
   - Bash(humanlayer *)
 ---

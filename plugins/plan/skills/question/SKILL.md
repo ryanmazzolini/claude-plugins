@@ -6,7 +6,7 @@ allowed-tools:
   - AskUserQuestion
   - Glob
   - Read
-  - Edit(thoughts/ryan/plans/**)
+  - Edit(thoughts/*/plans/**)
   - Bash(date +*)
   - Bash(mkdir *)
   - Bash(humanlayer *)
@@ -99,7 +99,7 @@ options:
 Read `references/stage-doc-schemas.md` for the canonical `question.md` schema. Write the artifact to:
 
 ```
-thoughts/ryan/plans/YYYY-MM-DD-[slug]/question.md
+thoughts/*/plans/YYYY-MM-DD-[slug]/question.md
 ```
 
 Populate every section from the conversation: Problem, Known Facts, Unknowns, Constraints, Success Criteria, and Research Brief.

@@ -6,7 +6,7 @@ allowed-tools:
   - Task(subagent_type:general-purpose)
   - Read
   - Glob
-  - Edit(thoughts/ryan/plans/**)
+  - Edit(thoughts/*/plans/**)
   - Bash(humanlayer thoughts sync)
 ---
 
@@ -34,7 +34,7 @@ Adaptive implementation loop driven by plan doc state:
 
 ### 1. Load & Resume
 
-Read `references/resolve-workflow-target.md` and follow its resolution priority. The resolved target is either a **workflow dir** (read `[dir]/plan.md`) or a **legacy flat file** (`thoughts/ryan/plans/*.md`). Either shape works — the plan doc layout is identical.
+Read `references/resolve-workflow-target.md` and follow its resolution priority. The resolved target is either a **workflow dir** (read `[dir]/plan.md`) or a **legacy flat file** (`thoughts/*/plans/*.md`). Either shape works — the plan doc layout is identical.
 
 Read and internalize:
 - **Goal** — what we're building

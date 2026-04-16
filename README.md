@@ -6,14 +6,13 @@ A personal marketplace of [Claude Code](https://docs.claude.com/en/docs/claude-c
 
 | Plugin | Summary |
 |---|---|
-| `plan` | Staged implementation planning workflow: question → research → design → structure → create → implement → verify. Each stage writes a durable artifact into a per-plan workflow directory. |
+| `plan` | Staged implementation planning workflow: question → research → design → structure → create → implement → verify. Each stage writes a durable artifact into a per-plan workflow directory. Walkthrough: [YouTube](https://www.youtube.com/watch?v=YwZR6tc7qYg). |
 | `commit` | Git commit, PR, and workflow automation. |
 | `review` | Code review workflows with progressive loading. |
 | `research` | Technical research with structured output. |
 | `explain` | Code explanation with visual diagrams and analogies. |
 | `diffity` | Browser-first diff review via [Diffity](https://www.npmjs.com/package/diffity). |
 | `humanlayer` | [HumanLayer](https://humanlayer.dev) thoughts integration — auto-persists plans, research, and reviews under `thoughts/`. |
-| `persona` | Engineering personas for specialized contexts. |
 | `ai-authoring` | Context guidelines for AI configuration work. |
 | `typescript-nextjs` | TypeScript and Next.js patterns and conventions. |
 | `ux-accessibility` | Usability heuristics, accessibility standards, and responsive design. |
@@ -31,9 +30,8 @@ Add the marketplace, then install any plugins you want:
 
 These plugins are **calibrated to my workflow**. In particular:
 
-- **HumanLayer profile name is hardcoded as `ryan`.** The `plan` and `humanlayer` plugins reference paths like `thoughts/ryan/plans/…` and include `Edit(thoughts/ryan/plans/**)` in their allowed-tools frontmatter. If you use HumanLayer with a different profile, search-and-replace `ryan` in `plugins/plan/` and `plugins/humanlayer/` to match your profile name.
-- **HumanLayer is required for `plan` and `humanlayer`.** Those plugins assume a working `thoughts/` symlink. Install HumanLayer and run `humanlayer thoughts init` before using them, or skip those plugins.
-- **Some plugins are fairly bare.** `persona`, `typescript-nextjs`, `ux-accessibility`, and `ai-authoring` are mostly rule sets I iterate on — treat them as examples more than products.
+- **HumanLayer is required for `plan` and `humanlayer`.** Those plugins assume a `thoughts/` symlink farm exists at the repo root. Install [HumanLayer](https://humanlayer.dev) and run `humanlayer thoughts init` before using them, or skip those plugins.
+- **Some plugins are fairly bare.** `typescript-nextjs`, `ux-accessibility`, and `ai-authoring` are mostly rule sets I iterate on — treat them as examples more than products.
 
 ## Contributing
 

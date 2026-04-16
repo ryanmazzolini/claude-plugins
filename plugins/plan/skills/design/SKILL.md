@@ -6,7 +6,7 @@ allowed-tools:
   - Task(subagent_type:general-purpose)
   - AskUserQuestion
   - Read
-  - Edit(thoughts/ryan/plans/**)
+  - Edit(thoughts/*/plans/**)
   - Glob
   - Bash(humanlayer *)
 ---

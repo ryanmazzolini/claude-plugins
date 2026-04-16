@@ -12,7 +12,7 @@ allowed-tools:
   - Bash(humanlayer *)
   - Glob
   - Read
-  - Edit(thoughts/ryan/plans/**)
+  - Edit(thoughts/*/plans/**)
   - WebSearch
   - WebFetch
 ---
@@ -52,7 +52,7 @@ DATE=$(date +%Y-%m-%d)
 
 - Arg is a workflow dir → use it.
 - Arg is a slug matching an existing workflow dir → use it.
-- Arg is a raw goal, GitHub URL, or Shortcut ticket → generate a slug per `references/slug-generation.md` and mkdir `thoughts/ryan/plans/$(date +%Y-%m-%d)-[slug]/`.
+- Arg is a raw goal, GitHub URL, or Shortcut ticket → generate a slug per `references/slug-generation.md` and mkdir `thoughts/*/plans/$(date +%Y-%m-%d)-[slug]/`.
 
 If a `question.md` already exists in the workflow dir, Read it — the Research Brief and Unknowns inform what to explore.
 

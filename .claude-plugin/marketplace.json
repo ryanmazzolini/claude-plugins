@@ -5,7 +5,6 @@
     { "name": "plan", "source": "./plugins/plan" },
     { "name": "review", "source": "./plugins/review" },
     { "name": "commit", "source": "./plugins/commit" },
-    { "name": "persona", "source": "./plugins/persona" },
     { "name": "ux-accessibility", "source": "./plugins/ux-accessibility" },
     { "name": "typescript-nextjs", "source": "./plugins/typescript-nextjs" },
     { "name": "ai-authoring", "source": "./plugins/ai-authoring" },

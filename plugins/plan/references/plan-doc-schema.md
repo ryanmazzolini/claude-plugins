@@ -15,7 +15,7 @@ goal: [one sentence outcome]
 # [Feature Name]
 
 **Status**: Planning | **Goal**: [one sentence outcome]
-**Workflow**: thoughts/ryan/plans/YYYY-MM-DD-[slug]/
+**Workflow**: thoughts/*/plans/YYYY-MM-DD-[slug]/
 **External**: [Link if applicable]
 
 ## Artifacts

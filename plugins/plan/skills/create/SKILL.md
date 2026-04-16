@@ -11,7 +11,7 @@ allowed-tools:
   - Bash(mkdir *)
   - Bash(humanlayer *)
   - Glob
-  - Edit(thoughts/ryan/plans/**)
+  - Edit(thoughts/*/plans/**)
   - Read
 ---
 

@@ -3,7 +3,7 @@ description: Run automated tests and walk through manual verification against a 
 argument-hint: "[plan filename or date]"
 allowed-tools:
   - Read
-  - Edit(thoughts/ryan/plans/**)
+  - Edit(thoughts/*/plans/**)
   - Glob
 ---
 
@@ -97,7 +97,7 @@ Verification complete. Remaining intents to address.
 Next steps:
 1. Run /commit:simple to commit verified work
 2. Run /clear
-3. Run /plan:implement thoughts/ryan/plans/YYYY-MM-DD-[slug] to continue with next intent
+3. Run /plan:implement thoughts/*/plans/YYYY-MM-DD-[slug] to continue with next intent
    (legacy flat file: /plan:implement [slug])
 ```
 
