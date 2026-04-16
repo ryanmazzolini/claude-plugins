@@ -6,10 +6,12 @@ allowed-tools:
   - Task(subagent_type:general-purpose)
   - Read
   - Edit(thoughts/*/plans/**)
+  - Edit(docs/plans/**)
+  - Edit(.plans/**)
+  - Edit(PRPs/**)
   - Glob
   - Bash(date +*)
   - Bash(mkdir *)
-  - Bash(humanlayer thoughts sync)
 ---
 
 # Focused Task
@@ -111,11 +113,6 @@ Write `plan.md` to `[workflow-dir]/plan.md` using the schema from `references/pl
 - Frontmatter uses `type: plan`, include `goal: [one sentence]`.
 - Include the `**Workflow**:` header line pointing at the workflow dir.
 
-Sync after writing:
-```bash
-humanlayer thoughts sync
-```
-
 ### 5. Execute
 
 Implement directly — same adaptive loop as `/plan:implement`:
@@ -125,7 +122,6 @@ Implement directly — same adaptive loop as `/plan:implement`:
 3. Implement
 4. Test (run automated verification)
 5. Update plan doc (move to Done, update Remaining Intent, log Deviations)
-6. Run `humanlayer thoughts sync` from the repo root
 
 **Multi-step tasks** — check in between intents via `AskUserQuestion`:
 ```

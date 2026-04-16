@@ -4,9 +4,11 @@ argument-hint: "[plan filename or date]"
 allowed-tools:
   - Read
   - Edit(thoughts/*/plans/**)
+  - Edit(docs/plans/**)
+  - Edit(.plans/**)
+  - Edit(PRPs/**)
   - Glob
   - Bash(date +*)
-  - Bash(humanlayer thoughts sync)
 ---
 
 # Session Checkpoint
@@ -64,12 +66,7 @@ Update the plan doc **Notes** section:
 
 Also update **Done** and **Remaining Intent** sections if they're stale.
 
-Write to `[workflow-dir]/plan.md` if the resolved target is a workflow directory, or to the legacy flat file path otherwise. The existing `Edit(thoughts/*/plans/**)` glob covers both shapes.
-
-**Sync thoughts** from the repo root (where the `thoughts/` symlink lives) after writing the checkpoint:
-```bash
-humanlayer thoughts sync
-```
+Write to `[workflow-dir]/plan.md` if the resolved target is a workflow directory, or to the legacy flat file path otherwise. The existing `Edit` glob covers both shapes.
 
 Prompt next steps:
 ```

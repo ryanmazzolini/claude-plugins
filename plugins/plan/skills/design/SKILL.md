@@ -7,8 +7,10 @@ allowed-tools:
   - AskUserQuestion
   - Read
   - Edit(thoughts/*/plans/**)
+  - Edit(docs/plans/**)
+  - Edit(.plans/**)
+  - Edit(PRPs/**)
   - Glob
-  - Bash(humanlayer *)
 ---
 
 # Plan: Design
@@ -31,7 +33,7 @@ Convergent design workflow that locks key choices before structuring work:
 2. **Load artifacts** → Read `question.md`, `research.md`; summarize state aloud
 3. **Surface decisions** → 2-5 material decisions, comparison then `AskUserQuestion`
 4. **Write `design.md`** → Per `stage-doc-schemas.md` schema
-5. **Sync and handoff** → `humanlayer thoughts sync` + handoff template
+5. **Handoff** → handoff template
 
 ## Process
 
@@ -87,12 +89,6 @@ Record each choice before moving to the next decision.
 
 Write `[workflow-dir]/design.md` using the schema from `references/stage-doc-schemas.md` (`design.md` section). Don't duplicate the schema here.
 
-### 5. Sync and Handoff
+### 5. Handoff
 
-From the repo root (where the `thoughts/` symlink lives):
-
-```bash
-humanlayer thoughts sync
-```
-
-Then print the handoff from the "After `design.md`" section of `references/handoff-templates.md`.
+Print the handoff from the "After `design.md`" section of `references/handoff-templates.md`.

@@ -4,6 +4,9 @@ argument-hint: "[plan filename or date]"
 allowed-tools:
   - Read
   - Edit(thoughts/*/plans/**)
+  - Edit(docs/plans/**)
+  - Edit(.plans/**)
+  - Edit(PRPs/**)
   - Glob
 ---
 
@@ -86,7 +89,7 @@ Summary:
 - Deviations: kept/reverted/adapted
 - Overall: ready to ship or needs work
 
-Update **Status** in `[workflow-dir]/plan.md` (if workflow) or the legacy flat file (if legacy) when all verification passes. Run `humanlayer thoughts sync` from the repo root (where the `thoughts/` symlink lives) after updating the plan doc.
+Update **Status** in `[workflow-dir]/plan.md` (if workflow) or the legacy flat file (if legacy) when all verification passes.
 
 Check if **Remaining Intent** still has unaddressed items.
 

@@ -9,10 +9,12 @@ allowed-tools:
   - Bash(gh issue view:*)
   - Bash(date +*)
   - Bash(mkdir *)
-  - Bash(humanlayer *)
   - Glob
   - Read
   - Edit(thoughts/*/plans/**)
+  - Edit(docs/plans/**)
+  - Edit(.plans/**)
+  - Edit(PRPs/**)
   - WebSearch
   - WebFetch
 ---
@@ -127,10 +129,4 @@ Then write `research.md` to `[workflow-dir]/research.md` using the schema from `
 
 ### 7. Handoff
 
-Sync from the repo root:
-
-```bash
-humanlayer thoughts sync
-```
-
-Then print the handoff using the "After `research.md`" template from `references/handoff-templates.md`.
+Print the handoff using the "After `research.md`" template from `references/handoff-templates.md`.

@@ -9,9 +9,11 @@ allowed-tools:
   - Bash(gh issue view:*)
   - Bash(date +*)
   - Bash(mkdir *)
-  - Bash(humanlayer *)
   - Glob
   - Edit(thoughts/*/plans/**)
+  - Edit(docs/plans/**)
+  - Edit(.plans/**)
+  - Edit(PRPs/**)
   - Read
 ---
 
@@ -126,10 +128,4 @@ Present summary, then confirm via `AskUserQuestion`. Write `plan.md` to `[workfl
 - Include the `## Artifacts` section with `./question.md`, `./research.md`, `./design.md`, `./structure.md` bullets — omit any whose file doesn't exist. If none exist, omit the section entirely.
 - Frontmatter uses `type: plan` and includes `goal: [one sentence]`.
 
-**After writing**, sync from the repo root and print the handoff:
-
-```bash
-humanlayer thoughts sync
-```
-
-Use the "After `plan.md` (from `/plan:create`)" template from `references/handoff-templates.md`.
+**After writing**, print the handoff using the "After `plan.md` (from `/plan:create`)" template from `references/handoff-templates.md`.

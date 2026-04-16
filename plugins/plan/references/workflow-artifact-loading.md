@@ -34,4 +34,4 @@ If `research.md` already answers a question, don't research it again. If `design
 
 ## After writing
 
-The current stage's artifact takes its place in the dir. Run `humanlayer thoughts sync` from the repo root.
+The current stage's artifact takes its place in the dir.

@@ -6,8 +6,10 @@ allowed-tools:
   - AskUserQuestion
   - Read
   - Edit(thoughts/*/plans/**)
+  - Edit(docs/plans/**)
+  - Edit(.plans/**)
+  - Edit(PRPs/**)
   - Glob
-  - Bash(humanlayer *)
 ---
 
 # Plan: Structure
@@ -88,10 +90,6 @@ Incorporate feedback before proceeding.
 
 Write to `[workflow-dir]/structure.md` per `references/stage-doc-schemas.md` (see the `structure.md` schema) using milestone syntax from `references/milestone-format.md`.
 
-### 6. Sync and Handoff
+### 6. Handoff
 
-```bash
-humanlayer thoughts sync
-```
-
-Then print the handoff message from the "After `structure.md`" section of `references/handoff-templates.md`.
+Print the handoff message from the "After `structure.md`" section of `references/handoff-templates.md`.

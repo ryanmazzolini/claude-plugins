@@ -72,7 +72,3 @@ Next steps:
 - /plan:verify [workflow-dir] when work is done
 - /commit:simple to commit
 ```
-
-## Sync
-
-Every stage runs `humanlayer thoughts sync` from the repo root before printing the handoff.

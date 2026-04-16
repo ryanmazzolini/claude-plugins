@@ -2,10 +2,35 @@
 
 Consistent rules for turning `$ARGUMENTS` into a workflow target. Every plan skill (except `progress`, which is read-only and has its own simpler variant) should follow these.
 
+## Plans root
+
+Before resolving anything, determine where plan artifacts live. Detection is top-down, first existing root wins:
+
+1. `.plans/` — hidden at repo root.
+2. `thoughts/*/plans/` — HumanLayer symlink farm. The `*` resolves to the single non-`searchable`, non-`global` subdir.
+3. `docs/plans/` — checked-in under product docs.
+4. `PRPs/` — Product Requirement Prompts convention.
+
+If none exist, `AskUserQuestion` once per session:
+
+```
+header: "Plans directory"
+question: "No plans directory found. Where should plan artifacts live?"
+options:
+  - label: ".plans/"
+    description: "Hidden at repo root, out-of-the-way"
+  - label: "docs/plans/"
+    description: "Checked-in, visible under product docs"
+  - label: "PRPs/"
+    description: "Product Requirement Prompts convention"
+```
+
+`mkdir -p` the chosen root before first write. Everywhere below that says `thoughts/*/plans/` means "the resolved plans root."
+
 ## Shapes
 
-- **Workflow directory**: `thoughts/*/plans/YYYY-MM-DD-[slug]/` containing zero or more of `question.md`, `research.md`, `design.md`, `structure.md`, `plan.md`. Name matches `^\d{4}-\d{2}-\d{2}-.+`.
-- **Legacy flat plan**: `thoughts/*/plans/*.md` (single file, not inside a workflow dir). Supported read/write for back-compat.
+- **Workflow directory**: `<plans-root>/YYYY-MM-DD-[slug]/` containing zero or more of `question.md`, `research.md`, `design.md`, `structure.md`, `plan.md`. Name matches `^\d{4}-\d{2}-\d{2}-.+`.
+- **Legacy flat plan**: `<plans-root>/*.md` (single file, not inside a workflow dir). Supported read/write for back-compat.
 
 ## Resolution priority
 
@@ -24,14 +49,6 @@ Walk this list top-down. The first match wins.
 - `create` and `task` write `plan.md` inside the resolved workflow dir.
 - `implement`, `save`, `verify` write back to the resolved target — either `[dir]/plan.md` (workflow) or the legacy flat file.
 - Read-only skills (`progress`, `next` before invoking) never write.
-
-## Sync
-
-After writing any artifact, run from the repo root (where the `thoughts/` symlink lives):
-
-```bash
-humanlayer thoughts sync
-```
 
 ## Ambiguity
 

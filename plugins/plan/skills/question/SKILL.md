@@ -7,9 +7,11 @@ allowed-tools:
   - Glob
   - Read
   - Edit(thoughts/*/plans/**)
+  - Edit(docs/plans/**)
+  - Edit(.plans/**)
+  - Edit(PRPs/**)
   - Bash(date +*)
   - Bash(mkdir *)
-  - Bash(humanlayer *)
   - Bash(gh issue view:*)
   - mcp__shortcut__stories-get-by-id
   - mcp__shortcut__stories-get-branch-name
@@ -33,7 +35,7 @@ Frame the problem and surface unknowns before research begins. Produces `questio
 2. **Load context** → read any existing artifacts; if none, work from the raw goal
 3. **Ask sharp questions** → 3-7 `AskUserQuestion` calls covering framing, scope, constraints, success criteria, risks
 4. **Write `question.md`** → per `stage-doc-schemas.md` schema
-5. **Sync and handoff** → `humanlayer thoughts sync` + handoff template
+5. **Handoff** → handoff template
 
 ## Process
 
@@ -104,12 +106,6 @@ thoughts/*/plans/YYYY-MM-DD-[slug]/question.md
 
 Populate every section from the conversation: Problem, Known Facts, Unknowns, Constraints, Success Criteria, and Research Brief.
 
-### 5. Sync and Handoff
+### 5. Handoff
 
-From the repo root:
-
-```bash
-humanlayer thoughts sync
-```
-
-Then print the handoff using the "After `question.md`" template from `references/handoff-templates.md`.
+Print the handoff using the "After `question.md`" template from `references/handoff-templates.md`.

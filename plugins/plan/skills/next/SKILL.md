@@ -10,6 +10,9 @@ allowed-tools:
   - Bash(date +*)
   - Bash(mkdir *)
   - Bash(ls thoughts/*/plans/*)
+  - Bash(ls docs/plans/*)
+  - Bash(ls .plans/*)
+  - Bash(ls PRPs/*)
 ---
 
 # Plan: Next
