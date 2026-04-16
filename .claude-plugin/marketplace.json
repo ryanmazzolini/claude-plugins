@@ -11,6 +11,7 @@
     { "name": "ai-authoring", "source": "./plugins/ai-authoring" },
     { "name": "explain", "source": "./plugins/explain" },
     { "name": "research", "source": "./plugins/research" },
-    { "name": "humanlayer", "source": "./plugins/humanlayer" }
+    { "name": "humanlayer", "source": "./plugins/humanlayer" },
+    { "name": "diffity", "source": "./plugins/diffity" }
   ]
 }
