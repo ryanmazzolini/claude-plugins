@@ -11,6 +11,7 @@ A personal marketplace of [Claude Code](https://docs.claude.com/en/docs/claude-c
 | `review` | Code review workflows with progressive loading. |
 | `research` | Technical research with structured output. |
 | `explain` | Code explanation with visual diagrams and analogies. |
+| `agent-browser` | Thin bridge to the [`agent-browser`](https://github.com/vercel-labs/agent-browser) CLI for browser automation. |
 | `diffity` | Browser-first diff review via [Diffity](https://www.npmjs.com/package/diffity). |
 | `humanlayer` | [HumanLayer](https://humanlayer.dev) thoughts integration — auto-persists plans, research, and reviews under `thoughts/`. |
 | `ai-authoring` | Context guidelines for AI configuration work. |

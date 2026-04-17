@@ -1,0 +1,8 @@
+{
+  "name": "agent-browser",
+  "version": "0.1.0",
+  "description": "Thin bridge to the agent-browser CLI for browser automation",
+  "author": {
+    "name": "Ryan"
+  }
+}
