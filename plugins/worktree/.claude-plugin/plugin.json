@@ -1,0 +1,5 @@
+{
+  "name": "worktree",
+  "description": "Git worktree workflows using wtp and git-worktreeinclude",
+  "version": "0.1.0"
+}

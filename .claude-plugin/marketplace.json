@@ -12,6 +12,7 @@
     { "name": "research", "source": "./plugins/research" },
     { "name": "agent-browser", "source": "./plugins/agent-browser" },
     { "name": "humanlayer", "source": "./plugins/humanlayer" },
-    { "name": "diffity", "source": "./plugins/diffity" }
+    { "name": "diffity", "source": "./plugins/diffity" },
+    { "name": "worktree", "source": "./plugins/worktree" }
   ]
 }
