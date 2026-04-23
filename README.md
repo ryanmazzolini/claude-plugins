@@ -1,6 +1,6 @@
 # claude-plugins
 
-A personal marketplace of [Claude Code](https://docs.claude.com/en/docs/claude-code/overview) plugins that I use day-to-day. Opinionated, not intended to be universally applicable — fork it, keep what's useful, and adapt the rest.
+A collection of opinionated [Claude Code](https://docs.claude.com/en/docs/claude-code/overview) plugins I use day-to-day. It is shaped around my personal workflow, but feel free to use it, fork it, and adapt anything that is useful.
 
 ## Plugins
 
@@ -27,7 +27,7 @@ Add the marketplace, then install any plugins you want:
 /plugin install plan@ryan-personal
 ```
 
-## Caveats before you fork
+## A quick note before you use or fork
 
 These plugins are **calibrated to my workflow**. In particular:
 
@@ -36,7 +36,7 @@ These plugins are **calibrated to my workflow**. In particular:
 
 ## Contributing
 
-This is a personal repo; PRs welcome but expect opinionated pushback. If you've built something similar, I'd rather link to your marketplace than merge a generalization that dilutes the intent here.
+This repo reflects my personal workflow and is shared in case it is useful. Feel free to borrow ideas, fork it, or open an issue or PR if something small would make it clearer or easier to use. If you end up building a more general version, feel free to share it too.
 
 ## License
 
