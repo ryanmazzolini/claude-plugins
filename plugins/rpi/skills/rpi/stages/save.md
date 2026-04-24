@@ -1,16 +1,3 @@
----
-description: Checkpoint current session progress to plan doc. Use before pausing, /clear, or ending a session.
-argument-hint: "[plan filename or date]"
-allowed-tools:
-  - Read
-  - Edit(thoughts/*/plans/**)
-  - Edit(docs/plans/**)
-  - Edit(.plans/**)
-  - Edit(PRPs/**)
-  - Glob
-  - Bash(date +*)
----
-
 # Session Checkpoint
 
 <rules>
@@ -74,5 +61,5 @@ Checkpoint saved to [resolved target path]
 
 To resume later:
 1. Run /clear to free up context
-2. Run /plan:implement [workflow-dir]  (legacy flat file: /plan:implement [slug])
+2. Run /rpi implement [workflow-dir]  (legacy flat file: /rpi implement [slug])
 ```

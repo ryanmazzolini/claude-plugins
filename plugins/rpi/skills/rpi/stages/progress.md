@@ -1,11 +1,3 @@
----
-description: Check progress on a plan — what's done, what remains, and suggested next action. Use anytime to get bearings.
-argument-hint: "[plan filename or date]"
-allowed-tools:
-  - Read
-  - Glob
----
-
 # Plan Progress
 
 <rules>
@@ -75,8 +67,8 @@ Present:
 
 ## Suggested Next
 [One of:]
-- "Continue implementing — next milestone is [X]. Run `/plan:implement [workflow-dir]` (or the plan file path for legacy plans)."
-- "All milestones addressed — verify with `/plan:verify [workflow-dir]` (or the plan file path for legacy plans)."
+- "Continue implementing — next milestone is [X]. Run `/rpi implement [workflow-dir]` (or the plan file path for legacy plans)."
+- "All milestones addressed — verify with `/rpi verify [workflow-dir]` (or the plan file path for legacy plans)."
 - "[Milestone] is blocked by [dependency] — resolve that first."
-- "Save progress first — run `/plan:save [workflow-dir]` (or the plan file path for legacy plans)."
+- "Save progress first — run `/rpi save [workflow-dir]` (or the plan file path for legacy plans)."
 ```

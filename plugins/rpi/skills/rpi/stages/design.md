@@ -1,17 +1,3 @@
----
-description: Align current/target state and key design decisions. Third stage of the planning workflow.
-argument-hint: "[workflow dir]"
-allowed-tools:
-  - Task(subagent_type:general-purpose)
-  - AskUserQuestion
-  - Read
-  - Edit(thoughts/*/plans/**)
-  - Edit(docs/plans/**)
-  - Edit(.plans/**)
-  - Edit(PRPs/**)
-  - Glob
----
-
 # Plan: Design
 
 Converge on 2-5 design decisions that materially shape implementation. Reads workflow artifacts, surfaces options with tradeoffs, asks the user to choose, then writes `design.md`.
@@ -43,10 +29,10 @@ Follow `references/resolve-workflow-target.md` resolution rules. `$ARGUMENTS` mu
 **If `$ARGUMENTS` is a raw goal** (free text, not a workflow dir): stop with a helpful error.
 
 ```
-/plan:design requires an existing workflow directory.
+/rpi design requires an existing workflow directory.
 Try:
-  /plan:next [workflow-dir]   — let the orchestrator pick the right stage
-  /plan:question [goal]       — start from scratch
+  /rpi [workflow-dir]   — let the orchestrator pick the right stage
+  /rpi question [goal]       — start from scratch
 ```
 
 ### 2. Load Artifacts

@@ -30,7 +30,7 @@ If `research.md` already answers a question, don't research it again. If `design
 
 - `design` called without `research.md` — warn and ask: "Proceed without research?" (via `AskUserQuestion`).
 - `structure` called without `design.md` — warn and ask: "Proceed without a design?"
-- `create` called without any upstream — suggest running `/plan:question` first, but allow "Continue anyway".
+- `create`/`plan` called without any upstream — suggest `/rpi research` for RPI or `/rpi question` for QRSPI, but allow "Continue anyway".
 
 ## After writing
 

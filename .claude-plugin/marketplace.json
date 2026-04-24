@@ -2,7 +2,7 @@
   "name": "ryan-personal",
   "owner": { "name": "Ryan" },
   "plugins": [
-    { "name": "plan", "source": "./plugins/plan" },
+    { "name": "rpi", "source": "./plugins/rpi" },
     { "name": "review", "source": "./plugins/review" },
     { "name": "commit", "source": "./plugins/commit" },
     { "name": "ux-accessibility", "source": "./plugins/ux-accessibility" },

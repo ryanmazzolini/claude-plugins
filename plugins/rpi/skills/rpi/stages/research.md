@@ -1,23 +1,3 @@
----
-description: Research a problem space before planning. Explores prior art, codebase patterns, related implementations, and risks.
-argument-hint: "[workflow dir, feature description, GitHub URL, or Shortcut URL]"
-allowed-tools:
-  - Task(subagent_type:general-purpose)
-  - mcp__shortcut__stories-get-by-id
-  - mcp__shortcut__stories-get-branch-name
-  - Bash(gh issue view:*)
-  - Bash(date +*)
-  - Bash(mkdir *)
-  - Glob
-  - Read
-  - Edit(thoughts/*/plans/**)
-  - Edit(docs/plans/**)
-  - Edit(.plans/**)
-  - Edit(PRPs/**)
-  - WebSearch
-  - WebFetch
----
-
 # Research
 
 <rules>
@@ -26,7 +6,7 @@ allowed-tools:
 - **DEVIL'S ADVOCATE**: Always include a contrarian agent that challenges assumptions
 - **STRUCTURED OUTPUT**: Produce a `research.md` that downstream stages can consume
 - **TEACH**: Explain what you found and why it matters — don't just dump links
-- **NO DECISIONS**: Surface tradeoffs, don't make choices — that's `/plan:design`'s job
+- **NO DECISIONS**: Surface tradeoffs, don't make choices — that's `/rpi design`'s job
 </rules>
 
 ## Summary
@@ -39,7 +19,7 @@ Divergent research workflow that explores a problem space before planning:
 4. **Confirm agents** → User approves or customizes research team
 5. **Run research** → Parallel agents explore web, codebase, and risks
 6. **Synthesize** → Write `research.md` inside the workflow dir
-7. **Handoff** → Suggest `/plan:next` or `/plan:design`
+7. **Handoff** → Suggest `/rpi` or `/rpi design`
 
 ## Process
 

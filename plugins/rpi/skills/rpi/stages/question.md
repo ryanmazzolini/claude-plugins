@@ -1,21 +1,3 @@
----
-description: Frame problem and unknowns before research. First stage of the planning workflow.
-argument-hint: "[workflow dir, goal, GitHub URL, or Shortcut URL]"
-allowed-tools:
-  - AskUserQuestion
-  - Glob
-  - Read
-  - Edit(thoughts/*/plans/**)
-  - Edit(docs/plans/**)
-  - Edit(.plans/**)
-  - Edit(PRPs/**)
-  - Bash(date +*)
-  - Bash(mkdir *)
-  - Bash(gh issue view:*)
-  - mcp__shortcut__stories-get-by-id
-  - mcp__shortcut__stories-get-branch-name
----
-
 # Plan: Question
 
 Frame the problem and surface unknowns before research begins. Produces `question.md` inside the workflow dir.

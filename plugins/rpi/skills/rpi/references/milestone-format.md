@@ -1,6 +1,6 @@
 # Milestone Format
 
-Canonical syntax for `Remaining Intent` in `plan.md` and `Proposed Milestones` in `structure.md`. Used by `/plan:structure` and `/plan:create`.
+Canonical syntax for `Remaining Intent` in `plan.md` and `Proposed Milestones` in `structure.md`. Used by `/rpi structure` and `/rpi plan`.
 
 ## Shape
 

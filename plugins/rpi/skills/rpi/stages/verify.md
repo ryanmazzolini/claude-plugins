@@ -1,15 +1,3 @@
----
-description: Run automated tests and walk through manual verification against a plan. Use after implementation or to re-verify.
-argument-hint: "[plan filename or date]"
-allowed-tools:
-  - Read
-  - Edit(thoughts/*/plans/**)
-  - Edit(docs/plans/**)
-  - Edit(.plans/**)
-  - Edit(PRPs/**)
-  - Glob
----
-
 # Plan Verification
 
 <rules>
@@ -100,8 +88,8 @@ Verification complete. Remaining intents to address.
 Next steps:
 1. Run /commit:simple to commit verified work
 2. Run /clear
-3. Run /plan:implement thoughts/*/plans/YYYY-MM-DD-[slug] to continue with next intent
-   (legacy flat file: /plan:implement [slug])
+3. Run /rpi implement thoughts/*/plans/YYYY-MM-DD-[slug] to continue with next intent
+   (legacy flat file: /rpi implement [slug])
 ```
 
 **If all intents addressed:**

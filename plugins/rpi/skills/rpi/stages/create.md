@@ -1,21 +1,3 @@
----
-description: Distill workflow artifacts into an implementation plan with options analysis and intent shaping
-argument-hint: "[workflow dir, research slug, feature description, GitHub URL, or Shortcut URL]"
-allowed-tools:
-  - Task(subagent_type:general-purpose)
-  - mcp__shortcut__stories-get-by-id
-  - mcp__shortcut__stories-get-branch-name
-  - Bash(gh issue view:*)
-  - Bash(date +*)
-  - Bash(mkdir *)
-  - Glob
-  - Edit(thoughts/*/plans/**)
-  - Edit(docs/plans/**)
-  - Edit(.plans/**)
-  - Edit(PRPs/**)
-  - Read
----
-
 # Plan Creation
 
 <rules>
@@ -63,11 +45,11 @@ Read existing artifacts from the workflow dir per `references/workflow-artifact-
 
 ```
 header: "No artifacts"
-question: "No upstream artifacts found. /plan:create works best after /plan:research (or the full QRSPI pipeline)."
+question: "No upstream artifacts found. /rpi plan works best after /rpi research (or the full QRSPI pipeline)."
 options:
-  - label: "Run /plan:next first (Recommended)"
+  - label: "Run /rpi first (Recommended)"
     description: "Let the orchestrator route you through framing/research"
-  - label: "Use /plan:task instead"
+  - label: "Use /rpi task instead"
     description: "For simple, single-concern tasks that skip research"
   - label: "Continue anyway"
     description: "Plan without upstream artifacts — you'll provide context directly"
@@ -127,4 +109,4 @@ Present summary, then confirm via `AskUserQuestion`. Write `plan.md` to `[workfl
 - Include the `## Artifacts` section with `./question.md`, `./research.md`, `./design.md`, `./structure.md` bullets — omit any whose file doesn't exist. If none exist, omit the section entirely.
 - Frontmatter uses `type: plan` and includes `goal: [one sentence]`.
 
-**After writing**, print the handoff using the "After `plan.md` (from `/plan:create`)" template from `references/handoff-templates.md`.
+**After writing**, print the handoff using the "After `plan.md` (from `/rpi plan`)" template from `references/handoff-templates.md`.

@@ -1,0 +1,5 @@
+{
+  "name": "rpi",
+  "description": "Durable RPI/QRSPI implementation planning workflow (research → plan → implement, or question → research → design → structure → plan → implement)",
+  "version": "3.0.0"
+}

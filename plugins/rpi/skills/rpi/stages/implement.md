@@ -1,16 +1,3 @@
----
-description: Execute plan via adaptive loop with guided learning and deviation tracking
-argument-hint: "[workflow dir, plan file, or slug]"
-allowed-tools:
-  - Task(subagent_type:general-purpose)
-  - Read
-  - Glob
-  - Edit(thoughts/*/plans/**)
-  - Edit(docs/plans/**)
-  - Edit(.plans/**)
-  - Edit(PRPs/**)
----
-
 # Plan Implementation
 
 Guided implementation where the user learns and reviews every change.
@@ -45,7 +32,7 @@ Read and internalize:
 - **Remaining Intent** — what still needs to happen, grouped by concern (`###`) and milestone (`####`)
 - **Milestone dependencies** — `_after: X_` annotations: don't start a milestone until its dependencies are in Done
 - **Deviations** — what went off-script previously
-- **Notes** — session context from last `/plan:save`
+- **Notes** — session context from last `/rpi save`
 
 If Notes has context from a previous session, summarize: "Picking up where we left off — [context]."
 
@@ -180,8 +167,8 @@ If "Verify this milestone": update plan doc (Done + Notes), then prompt:
 ```
 Milestone complete. Next steps:
 1. Run /clear
-2. Run /plan:verify [workflow-dir] to verify this work
-3. Then /plan:implement [workflow-dir] to continue with remaining milestones
+2. Run /rpi verify [workflow-dir] to verify this work
+3. Then /rpi implement [workflow-dir] to continue with remaining milestones
 ```
 
 (For legacy flat plans, pass the plan file path instead of a workflow dir.)
@@ -190,7 +177,7 @@ If "Save & pause": update plan doc Notes, then prompt:
 ```
 Progress saved. To resume later:
 1. Run /clear
-2. Run /plan:implement [workflow-dir]
+2. Run /rpi implement [workflow-dir]
 ```
 
 **h) Loop** back to (a) until Remaining Intent is empty or user stops.
@@ -216,7 +203,7 @@ Manual testing guide:
 
 **Deviations** — Surface all off-script changes for review.
 
-Suggest running `/plan:verify` for thorough pass/fail tracking.
+Suggest running `/rpi verify` for thorough pass/fail tracking.
 
 ### 4. Complete
 
@@ -231,7 +218,7 @@ Implementation complete.
 
 Next steps:
 1. Run /clear to free up context
-2. Run /plan:verify [workflow-dir] to run verification checks
+2. Run /rpi verify [workflow-dir] to run verification checks
    — or —
    Run /commit:simple to commit your changes
 ```

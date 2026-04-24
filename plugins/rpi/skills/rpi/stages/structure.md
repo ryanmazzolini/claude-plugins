@@ -1,16 +1,3 @@
----
-description: Decompose design into vertical-slice milestones and dependencies. Fourth stage of the planning workflow.
-argument-hint: "[workflow dir]"
-allowed-tools:
-  - AskUserQuestion
-  - Read
-  - Edit(thoughts/*/plans/**)
-  - Edit(docs/plans/**)
-  - Edit(.plans/**)
-  - Edit(PRPs/**)
-  - Glob
----
-
 # Plan: Structure
 
 Turn an aligned design into vertical-slice milestones with explicit dependencies. Output: `structure.md` in the workflow dir.
@@ -20,7 +7,7 @@ Turn an aligned design into vertical-slice milestones with explicit dependencies
 - **INDEPENDENT VERIFICATION**: Each slice must be testable on its own before the next begins
 - **MINIMIZE DEPENDENCIES**: Add `_after:` only when the milestone needs the **output** of another, not just decision knowledge
 - **ARTIFACT-FIRST**: Build from `design.md`; do not reconstruct decisions from chat history
-- **NO PLAN DOC**: Write `structure.md` only — `/plan:create` produces `plan.md`
+- **NO PLAN DOC**: Write `structure.md` only — `/rpi plan` produces `plan.md`
 </rules>
 
 ## Summary
@@ -29,7 +16,7 @@ Turn an aligned design into vertical-slice milestones with explicit dependencies
 - Loads all upstream artifacts and summarizes the design before proposing structure
 - Groups outcomes into `###` concerns and `####` milestones per `references/milestone-format.md`
 - Validates groupings with the user via `AskUserQuestion` before writing
-- Writes `structure.md` and hands off to `/plan:create`
+- Writes `structure.md` and hands off to `/rpi plan`
 
 ## Process
 
@@ -37,7 +24,7 @@ Turn an aligned design into vertical-slice milestones with explicit dependencies
 
 Require a workflow dir. Follow `references/resolve-workflow-target.md` exactly.
 
-If `$ARGUMENTS` is a raw goal (not a workflow dir or slug), do not create a new dir — explain that `/plan:structure` needs an existing workflow and suggest `/plan:question` or `/plan:next`.
+If `$ARGUMENTS` is a raw goal (not a workflow dir or slug), do not create a new dir — explain that `/rpi structure` needs an existing workflow and suggest `/rpi question` or `/rpi`.
 
 ### 2. Load Artifacts
 
@@ -50,7 +37,7 @@ header: "No design.md found"
 question: "Proceed without a design? Structure without locked decisions may need to be redone."
 options:
   - label: "Proceed anyway"
-  - label: "Stop — I'll run /plan:design first"
+  - label: "Stop — I'll run /rpi design first"
 ```
 
 Before proposing anything, present a 3-6 line summary confirming:

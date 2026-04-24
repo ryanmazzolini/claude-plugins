@@ -1,24 +1,9 @@
----
-description: Focused planning and execution for single-concern tasks. Creates a slim plan doc compatible with save/progress/verify.
-argument-hint: "[workflow dir or task description]"
-allowed-tools:
-  - Task(subagent_type:general-purpose)
-  - Read
-  - Edit(thoughts/*/plans/**)
-  - Edit(docs/plans/**)
-  - Edit(.plans/**)
-  - Edit(PRPs/**)
-  - Glob
-  - Bash(date +*)
-  - Bash(mkdir *)
----
-
 # Focused Task
 
 <rules>
-- **SINGLE CONCERN**: One component, one problem — suggest /plan:create for multi-component or architectural work
+- **SINGLE CONCERN**: One component, one problem — suggest /rpi plan for multi-component or architectural work
 - **LIGHT RESEARCH**: Two parallel agents (research + devil's advocate) — not the full research team
-- **SLIM DOC**: Same plan template as /plan:create but terser — flat intent list, no Artifacts section
+- **SLIM DOC**: Same plan template as /rpi plan but terser — flat intent list, no Artifacts section
 - **EXECUTE AFTER CONFIRM**: Implement directly after user confirms approach
 - **TEACH**: Explain what will change, why, and how it connects to existing code
 </rules>
@@ -114,7 +99,7 @@ Write `plan.md` to `[workflow-dir]/plan.md` using the schema from `references/pl
 
 ### 5. Execute
 
-Implement directly — same adaptive loop as `/plan:implement`:
+Implement directly — same adaptive loop as `/rpi implement`:
 
 1. Pick highest-value intent
 2. Explain what will change and why
@@ -139,18 +124,18 @@ options:
 
 ### 6. Complete
 
-Update plan doc Status. Print handoff using the "After `plan.md` (from `/plan:task`)" template from `references/handoff-templates.md`.
+Update plan doc Status. Print handoff using the "After `plan.md` (from `/rpi task`)" template from `references/handoff-templates.md`.
 
 ## When to Use
 
-**Good for `/plan:task`** — single-concern work:
+**Good for `/rpi task`** — single-concern work:
 - Bug fixes
 - Small features
 - Single component changes
 - Adding tests
 - Config changes
 
-**Use `/plan:next` or `/plan:research` → `/plan:create` instead** — broader scope:
+**Use `/rpi` or `/rpi research` → `/rpi plan` instead** — broader scope:
 - Multi-component features
 - Architecture changes
 - Needs full research team

@@ -6,7 +6,7 @@ A collection of opinionated [Claude Code](https://docs.claude.com/en/docs/claude
 
 | Plugin | Summary |
 |---|---|
-| `plan` | Staged implementation planning workflow (QRSPI): question → research → design → structure → create → implement → verify. Each stage writes a durable artifact into a per-plan workflow directory. Autodetects `.plans/`, `thoughts/`, `docs/plans/`, or `PRPs/`. Walkthrough: [YouTube — QRSPI in action](https://www.youtube.com/watch?v=YwZR6tc7qYg). |
+| `rpi` | Durable implementation planning workflow with RPI and QRSPI modes. RPI: research → plan → implement → verify. QRSPI: question → research → design → structure → plan → implement → verify. Each stage writes a durable artifact into a per-plan workflow directory. Autodetects `.plans/`, `thoughts/`, `docs/plans/`, or `PRPs/`. Walkthrough: [YouTube — QRSPI in action](https://www.youtube.com/watch?v=YwZR6tc7qYg). |
 | `commit` | Git commit, PR, and workflow automation. |
 | `review` | Code review workflows with progressive loading. |
 | `research` | Technical research with structured output. |
@@ -24,14 +24,14 @@ Add the marketplace, then install any plugins you want:
 
 ```
 /plugin marketplace add ryan-mazzolini/claude-plugins
-/plugin install plan@ryan-personal
+/plugin install rpi@ryan-personal
 ```
 
 ## A quick note before you use or fork
 
 These plugins are **calibrated to my workflow**. In particular:
 
-- **`humanlayer` requires [HumanLayer](https://humanlayer.dev).** It assumes a `thoughts/` symlink farm exists at the repo root (`humanlayer thoughts init`). Skip this plugin if you don't use HumanLayer. `plan` works fine without it — it'll autodetect `.plans/`, `docs/plans/`, or `PRPs/` instead.
+- **`humanlayer` requires [HumanLayer](https://humanlayer.dev).** It assumes a `thoughts/` symlink farm exists at the repo root (`humanlayer thoughts init`). Skip this plugin if you don't use HumanLayer. `rpi` works fine without it — it'll autodetect `.plans/`, `docs/plans/`, or `PRPs/` instead.
 - **Some plugins are fairly bare.** `typescript-nextjs`, `ux-accessibility`, and `ai-authoring` are mostly rule sets I iterate on — treat them as examples more than products.
 
 ## Contributing

@@ -1,6 +1,6 @@
 # plan.md Schema
 
-Canonical shape for the `plan.md` artifact written by `/plan:create` and `/plan:task`. Kept lean — stay under 150 lines.
+Canonical shape for the `plan.md` artifact written by `/rpi plan` and `/rpi task`. Kept lean — stay under 150 lines.
 
 ## Full template
 
@@ -35,7 +35,7 @@ goal: [one sentence outcome]
 [Empty — filled during implementation]
 
 ## Remaining Intent
-[See references/milestone-format.md. Grouped by `###` concern and `####` milestone with optional `_after:` deps. `/plan:task` may use a flat bullet list instead of milestones.]
+[See references/milestone-format.md. Grouped by `###` concern and `####` milestone with optional `_after:` deps. `/rpi task` may use a flat bullet list instead of milestones.]
 
 ## Deviations
 [Empty — tracked when going off-script during implementation]
@@ -51,12 +51,12 @@ goal: [one sentence outcome]
 3. [Verify outcome]
 
 ## Notes
-[Empty — filled by /plan:save or during /plan:implement]
+[Empty — filled by /rpi save or during /rpi implement]
 ```
 
 ## Rules
 
-- **`## Artifacts` section**: omit the bullet for any upstream artifact that doesn't exist in the workflow dir. If *no* upstream artifacts exist (pure `/plan:task` path), omit the whole `## Artifacts` section.
+- **`## Artifacts` section**: omit the bullet for any upstream artifact that doesn't exist in the workflow dir. If *no* upstream artifacts exist (pure `/rpi task` path), omit the whole `## Artifacts` section.
 - **`**Workflow**:`** header line: always present. Points at the workflow dir (not the `plan.md` path).
 - **`**External**:`** header: include only when a GitHub/Shortcut/Linear link is relevant. Omit otherwise.
 - **`---` frontmatter**: `type: plan` (not `workflow-stage`). Include `goal:` for consistency with stage artifacts.
